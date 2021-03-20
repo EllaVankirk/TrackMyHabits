@@ -32,7 +32,7 @@ namespace TrackMyHabit
         options.UseSqlServer(Configuration.GetConnectionString("ApplicationDbContext")));
             services.AddRazorPages();
             services.Configure<IdentityOptions>(options =>
-                 options.Password.RequiredLength = 4
+                 options.Password.RequiredLength = 6
             );
         }
 

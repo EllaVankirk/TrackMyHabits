@@ -14,5 +14,17 @@ namespace TrackMyHabit.Models
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
 
+        public Habits()
+        {
+
+        }
+
+        public Habits (string name, DateTime date)
+        {
+            name = Name;
+            date = Date;
+        }
+
+
     }
 }
