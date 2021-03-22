@@ -1,14 +1,9 @@
-﻿@model TrackMyHabit.Models.CalendarApp
-
-@foreach (var day in Model)
-            {
-<p> </p>
-            }
+﻿@model TrackMyHabit.Models.Habits
 
 
 <div class="container-fluid">
     <h1 class="text-lg-center"> Habit Tracker </h1>
-    <p>Click the day to add a color coded habit!</p>
+    @*<p>Click the day to add a color coded habit!</p>*@
     <div class="row">
         <div class="col-sm-1"></div>
         <div class="col-lg-10" style="background-color:lavenderblush;">
@@ -26,3 +21,8 @@
         </div>
     </div>
 </div>
+@*foreach (day in dates) {
+ if the day is sunday, use the range of 42 to keep adding boxes
+
+}*@
+
