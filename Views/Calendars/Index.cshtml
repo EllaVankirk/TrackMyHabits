@@ -1,4 +1,4 @@
-﻿@model TrackMyHabit.Models.Habits
+﻿@model List<TrackMyHabit.Models.Habits>
 
 
 <div class="container-fluid">
@@ -21,8 +21,26 @@
         </div>
     </div>
 </div>
+@*<div class="container-fluid">
+    @foreach (var habit in @Model)
+            {
+                <p>@habit.Id</p>
+                <p>@habit.Name</p>
+            }
+
+</div>
+<div class="container-fluid">
+    <calendar month="11" year="2021" evt="@Model" />
+</div>*@
 @*foreach (day in dates) {
  if the day is sunday, use the range of 42 to keep adding boxes
 
-}*@
+}*@ 
+@foreach (var day in @Model.dates)
+            {
+                <div class="container-fluid">
+
+                </div>
+            }
+
 

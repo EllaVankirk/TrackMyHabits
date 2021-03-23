@@ -20,7 +20,6 @@ namespace TrackMyHabit.Controllers
         }
         public IActionResult Index()
         {
-            //List<Habits> habits = context.Habits.ToList();
             return View();
         }
     }
