@@ -1,4 +1,4 @@
-﻿@model List<TrackMyHabit.Models.Habits>
+﻿@model TrackMyHabit.Models.Calendars
 
 
 <div class="container-fluid">
@@ -21,26 +21,16 @@
         </div>
     </div>
 </div>
-@*<div class="container-fluid">
-    @foreach (var habit in @Model)
+
+<div class="container-fluid">
+    @foreach (var day in @Model.Dates)
             {
-                <p>@habit.Id</p>
-                <p>@habit.Name</p>
+                @if (day.DayOfWeek == DayOfWeek.Sunday && day != @Model.StartDate)
+                {
+                    <div class="w-100">
+                        <p>day</p>
+                    </div>
+                }
             }
 
 </div>
-<div class="container-fluid">
-    <calendar month="11" year="2021" evt="@Model" />
-</div>*@
-@*foreach (day in dates) {
- if the day is sunday, use the range of 42 to keep adding boxes
-
-}*@ 
-@foreach (var day in @Model.dates)
-            {
-                <div class="container-fluid">
-
-                </div>
-            }
-
-

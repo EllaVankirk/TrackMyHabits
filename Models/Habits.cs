@@ -12,8 +12,8 @@ namespace TrackMyHabit.Models
         public string Name { get; set; }
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
+        [Display(Name = "Initial")]
         public string HabitInitial { get; set; }
-
 
         public Habits() { }
 

@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TrackMyHabit.Migrations
 {
-    public partial class InitialCreate : Migration
+    public partial class InitialMigration : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -54,7 +54,7 @@ namespace TrackMyHabit.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     Date = table.Column<DateTime>(nullable: false),
-                    Type = table.Column<string>(nullable: true)
+                    HabitInitial = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
