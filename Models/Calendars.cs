@@ -19,7 +19,7 @@ namespace TrackMyHabit.Models
 
         public DateTime StartDate { get; set; }
 
-        public IEnumerable<DateTime> Dates { get; set;
+        public IEnumerable<DateTime> Dates { get; set; }
 
         public Calendars()
         {
