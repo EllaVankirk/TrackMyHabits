@@ -20,9 +20,12 @@ namespace TrackMyHabit.Models
         public DateTime StartDate { get; set; }
 
         public IEnumerable<DateTime> Dates { get; set; }
+        public DayOfWeek Week { get; }
 
         public Calendars()
         {
+            //It wants me to declare a day essentially
+
             var moment = DateTime.Now;
             Month = moment.Month;
             Year = moment.Year;

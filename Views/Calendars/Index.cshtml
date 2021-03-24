@@ -9,13 +9,11 @@
         <div class="col-lg-10" style="background-color:lavenderblush;">
             <table class="text-center">
                 <tr>
-                    <th class="col-sm-1">Monday</th>
-                    <th class="col-sm-1">Tuesday</th>
-                    <th class="col-sm-1">Wednesday</th>
-                    <th class="col-sm-1">Thursday</th>
-                    <th class="col-sm-1">Friday</th>
-                    <th class="col-sm-1">Saturday</th>
-                    <th class="col-sm-1">Sunday</th>
+                    @foreach (var day in Enum.GetValues(typeof(DayOfWeek)))
+                    {
+                        <th class="col-sm-1">@day</th>
+
+                    }
                 </tr>
             </table>
         </div>
@@ -23,14 +21,15 @@
 </div>
 
 <div class="container-fluid">
-    @foreach (var day in @Model.Dates)
-            {
-                @if (day.DayOfWeek == DayOfWeek.Sunday && day != @Model.StartDate)
-                {
-                    <div class="w-100">
-                        <p>day</p>
-                    </div>
-                }
-            }
 
 </div>
+    @*@foreach (var day in @Model.Dates)
+            {
+                <table>
+                    <tr>
+                        <th>@day.DayOfWeek</th>
+                    </tr>
+                </table>
+            }
+
+</div>*@
