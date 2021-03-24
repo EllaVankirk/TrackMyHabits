@@ -20,8 +20,8 @@ namespace TrackMyHabit.Controllers
         }
         public IActionResult Index()
         {
-
-            return View();
+            Calendars calendars = new Calendars();
+            return View(calendars);
         }
     }
 }
