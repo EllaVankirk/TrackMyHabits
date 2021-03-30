@@ -554,6 +554,11 @@ pre code {
 }
 
 @media (min-width: 576px) {
+    .day {
+        height: 14.2857vw;
+    }
+}
+@media (min-width: 576px) {
   .container {
     max-width: 540px;
   }

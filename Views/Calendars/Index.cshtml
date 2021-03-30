@@ -1,35 +1,18 @@
 ﻿@model TrackMyHabit.Models.Calendars
-
-
-<div class="container-fluid">
-    <h1 class="text-lg-center"> Habit Tracker </h1>
-    @*<p>Click the day to add a color coded habit!</p>*@
-    <div class="row">
-        <div class="col-sm-1"></div>
-        <div class="col-lg-10" style="background-color:lavenderblush;">
-            <table class="text-center">
-                <tr>
-                    @foreach (var day in Enum.GetValues(typeof(DayOfWeek)))
-                    {
-                        <th class="col-sm-1">@day</th>
-
-                    }
-                </tr>
-            </table>
-        </div>
+<div class="container">
+    <h1 class="display-4 mb-4 text-center"> Calendar </h1>
+    <p>Click the day to add a color coded habit!</p>
+    <div class="row d-sm-flex p-1 bg-dark text-white">
+        @foreach (var day in Enum.GetValues(typeof(DayOfWeek)))
+        {
+            <h5 class="col-sm p-1 text-center">@day</h5>
+        }
     </div>
-</div>
-
-<div class="container-fluid">
-
-</div>
-    @*@foreach (var day in @Model.Dates)
+    <div class="row border border-right-0 border-bottom-0">
+            @foreach (var days in Model.Dates)
             {
-                <table>
-                    <tr>
-                        <th>@day.DayOfWeek</th>
-                    </tr>
-                </table>
+                 <div class="day col-sm p-2 border border-left-0 border-top-0 d-none d-sm-inline-block bg-light text-muted">@days.Day</div>
             }
 
-</div>*@
+        </div>
+
