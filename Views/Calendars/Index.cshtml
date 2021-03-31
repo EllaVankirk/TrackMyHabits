@@ -9,10 +9,15 @@
         }
     </div>
     <div class="row border border-right-0 border-bottom-0">
-            @foreach (var days in Model.Dates)
+        @foreach (var days in Model.Dates)
+        {
+            if (days.DayOfWeek == DayOfWeek.Sunday && days != Model.StartDate)
             {
-                 <div class="day col-sm p-2 border border-left-0 border-top-0 d-none d-sm-inline-block bg-light text-muted">@days.Day</div>
+                <div class="w100"></div>
             }
+            <div class="day">@days.Date.Day</div>
+        }
 
-        </div>
+
+    </div>
 
