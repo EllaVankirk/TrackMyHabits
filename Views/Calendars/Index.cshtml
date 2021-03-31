@@ -2,22 +2,26 @@
 <div class="container">
     <h1 class="display-4 mb-4 text-center"> Calendar </h1>
     <p>Click the day to add a color coded habit!</p>
-    <div class="row d-sm-flex p-1 bg-dark text-white">
-        @foreach (var day in Enum.GetValues(typeof(DayOfWeek)))
-        {
-            <h5 class="col-sm p-1 text-center">@day</h5>
-        }
-    </div>
-    <div class="row border border-right-0 border-bottom-0">
-        @foreach (var days in Model.Dates)
-        {
-            if (days.DayOfWeek == DayOfWeek.Sunday && days != Model.StartDate)
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                @foreach (var day in Enum.GetValues(typeof(DayOfWeek)))
             {
-                <div class="w100"></div>
+                <th class="text-center">@day</th>
             }
-            <div class="day">@days.Date.Day</div>
-        }
-
-
-    </div>
-
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                @foreach (var days in Model.Dates)
+            {
+                if (days.DayOfWeek == DayOfWeek.Sunday && days != Model.StartDate)
+                {
+                    <tr></tr>
+                }
+                <td>@days.Date.Day</td>
+            }
+            </tr>
+        </tbody>
+    </table>
+</div>
