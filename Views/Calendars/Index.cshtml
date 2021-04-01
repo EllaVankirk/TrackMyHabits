@@ -1,19 +1,19 @@
 ﻿@model TrackMyHabit.Models.Calendars
 <div class="container">
     <h1 class="display-4 mb-4 text-center"> Calendar </h1>
+    <h2 class="display-4 mb-4 text-center">@Model.Day.ToString("MMMM")</h2>
     <p>Click the day to add a color coded habit!</p>
     <table class="table table-bordered">
         <thead class="thead-dark">
             <tr>
                 @foreach (var day in Enum.GetValues(typeof(DayOfWeek)))
-            {
-                <th class="text-center" width="10%">@day</th>
-            }
+                {
+                    <th class="text-center" width="10%">@day</th>
+                }
             </tr>
         </thead>
         <tbody>
-            <tr>
-                @foreach (var days in Model.Dates)
+            @foreach (var days in Model.Dates)
             {
                 if (days.DayOfWeek == DayOfWeek.Sunday && days != Model.StartDate)
                 {
@@ -21,7 +21,6 @@
                 }
                 <td style="height: 100px">@days.Date.Day</td>
             }
-            </tr>
-        </tbody>
-    </table>
-</div>
+            </tbody>
+        </table>
+        </div>
