@@ -3,6 +3,11 @@
     <h1 class="display-4 mb-4 text-center"> Calendar </h1>
     <h2 class="display-4 mb-4 text-center">@Model.Day.ToString("MMMM") @Model.Year</h2>
     <p>Click the day to add a color coded habit!</p>
+    <div>
+        <button type="button" class="btn-success float-right">Next</button>
+        <button type="button" class="btn-success float-left">Previous</button>
+    </div>
+
     <table class="table table-bordered">
         <thead class="thead-dark">
             <tr>
@@ -19,8 +24,8 @@
                 {
                     <tr></tr>
                 }
-                <td style="height: 100px">@days.Date.Day</td>
-            }
+            <td style="height: 100px">@days.Date.Day</td>
+        }
             </tbody>
         </table>
-        </div>
+    </div>
