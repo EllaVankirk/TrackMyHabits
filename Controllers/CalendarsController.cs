@@ -18,9 +18,25 @@ namespace TrackMyHabit.Controllers
         {
             context = dbContext;
         }
-        public IActionResult Index()
+        public IActionResult Index(string? name)
         {
             Calendars calendars = new Calendars();
+            return View(calendars);
+        }
+
+        [HttpPost]
+        public IActionResult ChangeMonth (string name, Calendars calendar)
+        {
+            Calendars calendars = new Calendars();
+            if (name == "previous")
+            {
+                calendars.Month = calendars.Month - 1;
+            }
+            else if (name == "next")
+            {
+                calendars.Month = calendars.Month + 1;
+            }
+
             return View(calendars);
         }
     }

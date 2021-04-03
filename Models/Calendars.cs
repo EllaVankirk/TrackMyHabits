@@ -30,5 +30,15 @@ namespace TrackMyHabit.Models
             StartDate = FirstOfMonth.AddDays(-(int)FirstOfMonth.DayOfWeek);
             Dates = Enumerable.Range(0, 42).Select(i => StartDate.AddDays(i));
         }
+
+        public Calendars (int Month, int Year)
+        {
+            var moment = DateTime.Now;
+            Month = moment.Month;
+            Year = moment.Year;
+            FirstOfMonth = new DateTime(Year, Month, 1);
+            StartDate = FirstOfMonth.AddDays(-(int)FirstOfMonth.DayOfWeek);
+            Dates = Enumerable.Range(0, 42).Select(i => StartDate.AddDays(i));
+        }
     }
 }
