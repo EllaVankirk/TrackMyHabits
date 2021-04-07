@@ -4,11 +4,12 @@
     <h2 class="display-4 mb-4 text-center">@Model.Day.ToString("MMMM") @Model.Year</h2>
     <p>Click the day to add a color coded habit!</p>
     <div class="row col-1">
-            <form asp-controller="Calendars" method="post">
+            <form asp-controller="Calendars" asp-action="ChangeMonth" method="post">
                 <div class="dropdown">
                     <label asp-for="Months"></label>
                     <select asp-for="Month" asp-items="Model.Months"></select>
                 </div>
+                <input type="submit" />
             </form>
     </div>
     <div>
@@ -28,7 +29,7 @@
                     {
                         <tr></tr>
                     }
-                    
+
                         <td style="height: 100px">@days.Date.Day </td>
 
                 }

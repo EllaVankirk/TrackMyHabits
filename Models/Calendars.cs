@@ -13,7 +13,7 @@ namespace TrackMyHabit.Models
     {
         public DateTime Day { get; set; } = DateTime.Now;
 
-        public int Month { get; set; }
+        public int Month { get; set; } = DateTime.Now.Month;
 
         public int Year { get; set; }
 
@@ -39,6 +39,16 @@ namespace TrackMyHabit.Models
         public List<Habits> Habit { get; set; }
 
         public Calendars()
+        {
+            var moment = DateTime.Now;
+            Month = moment.Month;
+            Year = moment.Year;
+            FirstOfMonth = new DateTime(Year, Month, 1);
+            StartDate = FirstOfMonth.AddDays(-(int)FirstOfMonth.DayOfWeek);
+            Dates = Enumerable.Range(0, 42).Select(i => StartDate.AddDays(i));
+        }
+
+        public Calendars(int month = 1)
         {
             var moment = DateTime.Now;
             Month = moment.Month;

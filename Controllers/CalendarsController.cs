@@ -23,5 +23,11 @@ namespace TrackMyHabit.Controllers
             Calendars calendars = new Calendars();
             return View(calendars);
         }
+
+        public IActionResult ChangeMonth(int month)
+        {
+            Calendars calendars = new Calendars(month);
+            return Redirect("/Index");
+        }
     }
 }
