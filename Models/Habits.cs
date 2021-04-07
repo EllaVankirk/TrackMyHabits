@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc.Rendering;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -14,7 +15,6 @@ namespace TrackMyHabit.Models
         public DateTime Date { get; set; }
         [Display(Name = "Initial")]
         public string HabitInitial { get; set; }
-
         public Habits() { }
 
         public Habits(string name, DateTime date, string habitInitial)
@@ -26,7 +26,7 @@ namespace TrackMyHabit.Models
 
         public override string ToString()
         {
-            return Name;
+            return HabitInitial;
         }
 
         public override bool Equals(object obj)

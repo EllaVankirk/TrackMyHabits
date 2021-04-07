@@ -1,30 +1,38 @@
-﻿@model TrackMyHabit.Models.Calendars
+﻿@model TrackMyHabit.Models.Calendars;
+
 <div class="container">
     <h2 class="display-4 mb-4 text-center">@Model.Day.ToString("MMMM") @Model.Year</h2>
     <p>Click the day to add a color coded habit!</p>
-    <div asp-controller="Calendars" asp-action="ChangeMonth" method="post">
-        <button type="button" name="next" class="btn-default float-right">Next</button>
-        <button type="button" name="previous" class="btn-default float-left">Previous</button>
+    <div class="row col-1">
+            <form asp-controller="Calendars" method="post">
+                <div class="dropdown">
+                    <label asp-for="Months"></label>
+                    <select asp-for="Month" asp-items="Model.Months"></select>
+                </div>
+            </form>
     </div>
+    <div>
+        <table class="table table-bordered">
+            <thead class="thead-dark">
+                <tr>
+                    @foreach (var day in Enum.GetValues(typeof(DayOfWeek)))
+                    {
+                        <th class="text-center" width="10%">@day</th>
+                    }
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var days in Model.Dates)
+                {
+                    if (days.DayOfWeek == DayOfWeek.Sunday && days != Model.StartDate)
+                    {
+                        <tr></tr>
+                    }
+                    
+                        <td style="height: 100px">@days.Date.Day </td>
 
-    <table class="table table-bordered">
-        <thead class="thead-dark">
-            <tr>
-                @foreach (var day in Enum.GetValues(typeof(DayOfWeek)))
-                {
-                    <th class="text-center" width="10%">@day</th>
                 }
-            </tr>
-        </thead>
-        <tbody>
-            @foreach (var days in Model.Dates)
-            {
-                if (days.DayOfWeek == DayOfWeek.Sunday && days != Model.StartDate)
-                {
-                    <tr></tr>
-                }
-            <td style="height: 100px">@days.Date.Day</td>
-            }
-        </tbody>
-        </table>
-    </div>
+             </tbody>
+            </table>
+     </div>
+</div>
