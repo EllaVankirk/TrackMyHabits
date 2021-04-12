@@ -1,7 +1,7 @@
 ﻿@model TrackMyHabit.Models.Calendars;
 
 <div class="container">
-    <h2 class="display-4 mb-4 text-center">@Model.Day.ToString("MMMM") @Model.Year</h2>
+    <h2 class="display-4 mb-4 text-center">@Model.DisplayDate.ToString("MMMM") @Model.Year</h2>
     <p>Click the day to add a color coded habit!</p>
     <form method="post" asp-controller="Calendars" asp-action="ChangeMonth" id="myform">
         <input type="text" id="btnVal" name="btnValue" hidden />

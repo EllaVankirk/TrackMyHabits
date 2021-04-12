@@ -20,19 +20,23 @@ namespace TrackMyHabit.Controllers
         }
         public IActionResult Index()
         {
-            Calendars calendars = new Calendars();
+            Calendars calendars = new Calendars(DateTime.Now);
             return View(calendars);
         }
 
         public IActionResult ChangeMonth(string btnValue)
         {
-            Calendars calendar = new Calendars();
+            Calendars nextCalendar = new Calendars(DateTime.Now.AddMonths(+1));
+            Calendars prevCalendar = new Calendars(DateTime.Now.AddMonths(-1));
 
             if (btnValue == "next")
             {
-                calendar.Day = new DateTime(2020, calendar.Month, 1);
+                return View("Index", nextCalendar);
             }
-            return View("Index", calendar);
+            else
+            {
+                return View("Index", prevCalendar);
+            }
         }
     }
 }
