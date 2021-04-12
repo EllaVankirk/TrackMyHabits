@@ -24,10 +24,15 @@ namespace TrackMyHabit.Controllers
             return View(calendars);
         }
 
-        public IActionResult ChangeMonth(int month)
+        public IActionResult ChangeMonth(string btnValue)
         {
-            Calendars calendars = new Calendars(month);
-            return Redirect("/Index");
+            Calendars calendar = new Calendars();
+
+            if (btnValue == "next")
+            {
+                calendar.Day = new DateTime(2020, calendar.Month, 1);
+            }
+            return View("Index", calendar);
         }
     }
 }

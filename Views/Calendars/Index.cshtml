@@ -3,15 +3,22 @@
 <div class="container">
     <h2 class="display-4 mb-4 text-center">@Model.Day.ToString("MMMM") @Model.Year</h2>
     <p>Click the day to add a color coded habit!</p>
-    <div class="row col-1">
-            <form asp-controller="Calendars" asp-action="ChangeMonth" method="post">
-                <div class="dropdown">
-                    <label asp-for="Months"></label>
-                    <select asp-for="Month" asp-items="Model.Months"></select>
-                </div>
-                <input type="submit" />
-            </form>
-    </div>
+    <form method="post" asp-controller="Calendars" asp-action="ChangeMonth" id="myform">
+        <input type="text" id="btnVal" name="btnValue" hidden />
+        <button type="button" name="next" value="Next" class="btn-default float-right" onclick="myButtonClick('next')">Next</button>
+        <button type="button" name="previous" value="Previous" class="btn-default float-left" onclick="myButtonClick('previous')" >Previous</button>
+    </form>
+    <script>
+        function myButtonClick(btn) {
+            if (btn == "next") {
+                document.getElementById("btnVal").value = "next";
+            }
+            else if (btn == "previous") {
+                document.getElementById("btnVal").value = "previous";
+            }
+            document.getElementById("myform").submit();
+        }
+    </script>
     <div>
         <table class="table table-bordered">
             <thead class="thead-dark">
