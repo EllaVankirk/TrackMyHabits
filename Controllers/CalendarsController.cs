@@ -21,14 +21,14 @@ namespace TrackMyHabit.Controllers
         public IActionResult Index()
         {
             Calendars calendars = new Calendars(DateTime.Now);
+            List<Habits> habits = context.Habits.ToList();
             return View(calendars);
         }
 
-        public IActionResult ChangeMonth(string btnValue)
+        public IActionResult ChangeMonth(string btnValue, DateTime currentMonth)
         {
-            Calendars nextCalendar = new Calendars(DateTime.Now.AddMonths(+1));
-            Calendars prevCalendar = new Calendars(DateTime.Now.AddMonths(-1));
-
+            Calendars nextCalendar = new Calendars(currentMonth.AddMonths(+1));
+            Calendars prevCalendar = new Calendars(currentMonth.AddMonths(-1));
             if (btnValue == "next")
             {
                 return View("Index", nextCalendar);

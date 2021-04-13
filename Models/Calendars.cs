@@ -12,9 +12,7 @@ namespace TrackMyHabit.Models
     public class Calendars
     {
         public DateTime Day { get; set; } = DateTime.Now;
-
         public int Month { get; set; }
-
         public int Year { get; set; }
         public DateTime DisplayDate { get; set; }
         public DateTime FirstOfMonth { get; set; }
@@ -31,6 +29,7 @@ namespace TrackMyHabit.Models
             FirstOfMonth = new DateTime(Year, Month, 1);
             StartDate = FirstOfMonth.AddDays(-(int)FirstOfMonth.DayOfWeek);
             Dates = Enumerable.Range(0, 42).Select(i => StartDate.AddDays(i));
+
         }
 
         public Calendars (DateTime displayDate)

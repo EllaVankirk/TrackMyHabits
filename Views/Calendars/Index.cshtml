@@ -4,9 +4,10 @@
     <h2 class="display-4 mb-4 text-center">@Model.DisplayDate.ToString("MMMM") @Model.Year</h2>
     <p>Click the day to add a color coded habit!</p>
     <form method="post" asp-controller="Calendars" asp-action="ChangeMonth" id="myform">
-        <input type="text" id="btnVal" name="btnValue" hidden />
+        <input type="text" id="btnVal" name="btnValue" hidden  />
+        <input type="datetime" value="@Model.DisplayDate" name="currentMonth" hidden />
         <button type="button" name="next" value="Next" class="btn-default float-right" onclick="myButtonClick('next')">Next</button>
-        <button type="button" name="previous" value="Previous" class="btn-default float-left" onclick="myButtonClick('previous')" >Previous</button>
+        <button type="button" name="previous" value="Previous" class="btn-default float-left" onclick="myButtonClick('previous')">Previous</button>
     </form>
     <script>
         function myButtonClick(btn) {
@@ -32,15 +33,14 @@
             <tbody>
                 @foreach (var days in Model.Dates)
                 {
-                    if (days.DayOfWeek == DayOfWeek.Sunday && days != Model.StartDate)
-                    {
-                        <tr></tr>
-                    }
+                        if (days.DayOfWeek == DayOfWeek.Sunday && days != Model.StartDate)
+                        {
+                            <tr></tr>
+                        }
 
-                        <td style="height: 100px">@days.Date.Day </td>
-
+                        <td style="height: 100px">@days.Date.Day</td>
                 }
-             </tbody>
+                </tbody>
             </table>
      </div>
 </div>
