@@ -21,7 +21,8 @@ namespace TrackMyHabit.Controllers
         public IActionResult Index()
         {
             Calendars calendars = new Calendars(DateTime.Now);
-            List<Habits> habits = context.Habits.ToList();
+            calendars.Habit = context.Habits.ToList();
+
             return View(calendars);
         }
 
