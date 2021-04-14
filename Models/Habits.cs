@@ -14,9 +14,11 @@ namespace TrackMyHabit.Models
         [DataType(DataType.Date)]
         public DateTime Date { get; set; }
         [Display(Name = "Initial")]
-        [Required]
+        [Required(ErrorMessage = "Initial is required.")]
         public string HabitInitial { get; set; }
-        public Habits() { }
+        public Habits()
+        {
+        }
 
         public Habits(string name, DateTime date, string habitInitial)
         {

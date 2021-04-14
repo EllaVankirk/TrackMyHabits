@@ -20,8 +20,10 @@ namespace TrackMyHabit.Controllers
         }
         public IActionResult Index()
         {
+            var habit = context.Habits.Include(h => h.HabitInitial);
             Calendars calendars = new Calendars(DateTime.Now);
-            calendars.Habit = context.Habits.ToList();
+            calendars.Habit = habit.ToList();
+
 
             return View(calendars);
         }
