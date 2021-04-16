@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using TrackMyHabit.Models;
 
 namespace TrackMyHabit.Controllers
 {
-
+    [Authorize]
     public class CalendarsController : Controller
     {
         private ApplicationDbContext context;
@@ -20,12 +21,17 @@ namespace TrackMyHabit.Controllers
         }
         public IActionResult Index()
         {
-            var habit = context.Habits.Include(h => h.HabitInitial);
             Calendars calendars = new Calendars(DateTime.Now);
-            calendars.Habit = habit.ToList();
+            List<Habits> habit = context.Habits.ToList();
 
 
             return View(calendars);
+        }
+
+        public IActionResult Index2()
+        {
+
+            return View();
         }
 
         public IActionResult ChangeMonth(string btnValue, DateTime currentMonth)

@@ -10,12 +10,6 @@ namespace TrackMyHabit.ViewModels
     {
         public Calendars Calendar { get; set; }
         public List<Habits> Habit { get; set; }
-        public List<Habits> HabitInitials { get; set; }
 
-        public DisplayHabitsViewModel(Calendars calendar, List<Habits> habit)
-        {
-            Calendar = calendar;
-            Habit = habit;
-        }
     }
 }
