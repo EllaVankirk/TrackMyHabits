@@ -27,12 +27,20 @@ namespace TrackMyHabit.Controllers
         //    return View(await _context.Habits.ToListAsync());
         //}
 
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
             ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
             ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            ViewData["CurrentFilter"] = searchString;
+
             var habits = from h in _context.Habits
                          select h;
+
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                habits = habits.Where(h => h.Name.Contains(searchString));
+            }
 
             switch (sortOrder)
             {
