@@ -16,9 +16,12 @@ namespace TrackMyHabit.Data
         }
         public DbSet<Habits> Habits { get; set; }
         public DbSet<AllDates> AllDates { get; set; }
+        public DbSet<HabitsDates> HabitsDates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<HabitsDates>()
+                .HasKey(hd => new { hd.AllDatesID, hd.HabitsID });
             base.OnModelCreating(modelBuilder);
         }
 
