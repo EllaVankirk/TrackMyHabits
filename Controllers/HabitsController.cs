@@ -22,9 +22,34 @@ namespace TrackMyHabit.Controllers
         }
 
         // GET: Habits
-        public async Task<IActionResult> Index()
+        //public async Task<IActionResult> Index()
+        //{
+        //    return View(await _context.Habits.ToListAsync());
+        //}
+
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            return View(await _context.Habits.ToListAsync());
+            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+            var habits = from h in _context.Habits
+                         select h;
+
+            switch (sortOrder)
+            {
+                case "name_desc":
+                    habits = habits.OrderByDescending(h => h.Name);
+                    break;
+                case "Date":
+                    habits = habits.OrderBy(h => h.Date);
+                    break;
+                case "date_desc":
+                    habits = habits.OrderByDescending(h => h.Date);
+                    break;
+                default:
+                    habits = habits.OrderBy(h => h.Name);
+                    break;
+            }
+            return View(await habits.AsNoTracking().ToListAsync());
         }
 
         // GET: Habits/Details/5

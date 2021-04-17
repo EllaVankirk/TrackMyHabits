@@ -23,15 +23,9 @@ namespace TrackMyHabit.Controllers
         {
             Calendars calendars = new Calendars(DateTime.Now);
             List<Habits> habit = context.Habits.ToList();
-
+            calendars.Habit = habit;
 
             return View(calendars);
-        }
-
-        public IActionResult Index2()
-        {
-
-            return View();
         }
 
         public IActionResult ChangeMonth(string btnValue, DateTime currentMonth)
