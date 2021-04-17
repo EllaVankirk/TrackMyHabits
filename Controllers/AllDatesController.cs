@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TrackMyHabit.Data;
 using TrackMyHabit.Models;
+using TrackMyHabit.Models.HabitsViewModels;
 
 namespace TrackMyHabit.Controllers
 {
@@ -39,6 +40,45 @@ namespace TrackMyHabit.Controllers
                 return Redirect("/AllDates");
             }
             return View("Add", dates);
+        }
+
+        public IActionResult AddHabit(int id)
+        {
+            Habits theHabit = _context.Habits.Find(id);
+            List<AllDates> possibleDates = _context.AllDates.ToList();
+
+            AddHabitsDatesViewModel viewModel = new AddHabitsDatesViewModel(theHabit, possibleDates);
+
+            return View(viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult AddHabit(AddHabitsDatesViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                int habitID = viewModel.HabitID;
+                int dateID = viewModel.AllDatesID;
+
+                List<HabitsDates> existingItems = _context.HabitsDates
+                    .Where(hd => hd.HabitsID == habitID)
+                    .Where(hd => hd.AllDatesID == dateID)
+                    .ToList();
+
+                if (existingItems.Count == 0)
+                {
+                    HabitsDates habitsDates = new HabitsDates
+                    {
+                        HabitsID = habitID,
+                        AllDatesID = dateID
+                    };
+
+                    _context.HabitsDates.Add(habitsDates);
+                    _context.SaveChanges();
+                }
+                return Redirect("/Habits/Details/" + habitID);
+            }
+            return View(viewModel);
         }
 
         public async Task<IActionResult> Delete(int? id)
