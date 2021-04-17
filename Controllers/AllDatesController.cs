@@ -40,5 +40,35 @@ namespace TrackMyHabit.Controllers
             }
             return View("Add", dates);
         }
+
+        public async Task<IActionResult> Delete(int? id)
+        {
+            if(id == null)
+            {
+                return NotFound();
+            }
+            var dates = await _context.AllDates
+                .FirstOrDefaultAsync(d => d.ID == id);
+            if ( dates == null)
+            {
+                return NotFound();
+            }
+
+            return View(dates);
+        }
+
+        [HttpPost, ActionName("Delete")]
+        public async Task<IActionResult> DeleteConfirmed(int id)
+        {
+            var dates = await _context.AllDates.FindAsync(id);
+            _context.AllDates.Remove(dates);
+            await _context.SaveChangesAsync();
+            return RedirectToAction(nameof(Index));
+        }
+
+        private bool DatesExists(int id)
+        {
+            return _context.AllDates.Any(e => e.ID == id);
+        }
     }
 }

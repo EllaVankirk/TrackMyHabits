@@ -9,6 +9,7 @@ namespace TrackMyHabit.Models
     public class AllDates
     {
         public int ID { get; set; }
+        [DataType(DataType.Date)]
         [Required]
         public DateTime Date { get; set; }
 
