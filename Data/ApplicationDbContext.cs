@@ -15,6 +15,7 @@ namespace TrackMyHabit.Data
         {
         }
         public DbSet<Habits> Habits { get; set; }
+        public DbSet<AllDates> AllDates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -8,11 +8,19 @@ namespace TrackMyHabit.Models
 {
     public class Habits
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Name { get; set; }
+        public string Colour { get; set; }
+        public string HabitInitial { get; set; }
 
-        [DataType(DataType.Date)]
-        public DateTime Date { get; set; }
+        public Habits(string name, string colour, string habitInitial)
+        {
+            Name = name;
+            colour = Colour;
+            habitInitial = HabitInitial;
+        }
+
+        public Habits() { }
 
     }
 }

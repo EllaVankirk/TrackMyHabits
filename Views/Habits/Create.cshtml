@@ -18,9 +18,14 @@
                 <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Date" class="control-label"></label>
-                <input asp-for="Date" class="form-control" />
-                <span asp-validation-for="Date" class="text-danger"></span>
+                <label asp-for="HabitInitial" class="control-label"></label>
+                <input asp-for="HabitInitial" class="form-control" />
+                <span asp-validation-for="HabitInitial" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Colour" class="control-label"></label>
+                <input type="color" asp-for="Colour" class="control-Label" />
+                <span asp-validation-for="Colour" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />

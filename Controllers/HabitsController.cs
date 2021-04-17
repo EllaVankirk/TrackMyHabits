@@ -34,7 +34,7 @@ namespace TrackMyHabit.Controllers
             }
 
             var habits = await _context.Habits
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (habits == null)
             {
                 return NotFound();
@@ -54,7 +54,7 @@ namespace TrackMyHabit.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Date")] Habits habits)
+        public async Task<IActionResult> Create([Bind("Id,Name,HabitInitial,Colour")] Habits habits)
         {
             if (ModelState.IsValid)
             {
@@ -86,9 +86,9 @@ namespace TrackMyHabit.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Date")] Habits habits)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,HabitInitial,Colour")] Habits habits)
         {
-            if (id != habits.Id)
+            if (id != habits.ID)
             {
                 return NotFound();
             }
@@ -102,7 +102,7 @@ namespace TrackMyHabit.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!HabitsExists(habits.Id))
+                    if (!HabitsExists(habits.ID))
                     {
                         return NotFound();
                     }
@@ -125,7 +125,7 @@ namespace TrackMyHabit.Controllers
             }
 
             var habits = await _context.Habits
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (habits == null)
             {
                 return NotFound();
@@ -147,7 +147,7 @@ namespace TrackMyHabit.Controllers
 
         private bool HabitsExists(int id)
         {
-            return _context.Habits.Any(e => e.Id == id);
+            return _context.Habits.Any(e => e.ID == id);
         }
     }
 }
