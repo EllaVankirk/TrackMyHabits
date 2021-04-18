@@ -11,34 +11,19 @@ namespace TrackMyHabit.Models
 
     public class Habits
     {
-        public int Id { get; set; }
+        public int ID { get; set; }
         public string Name { get; set; }
-        [DataType(DataType.Date)]
-        public DateTime Date { get; set; }
-        [Display(Name = "Initial")]
-        [Required(ErrorMessage = "Initial is required.")]
+        public string Colour { get; set; }
         public string HabitInitial { get; set; }
-        public Habits()
-        {
-        }
 
-        public Habits(string name, DateTime date, string habitInitial)
+        public Habits(string name, string colour, string habitInitial)
         {
             Name = name;
-            Date = date;
+            Colour = colour;
             HabitInitial = habitInitial;
         }
 
-        public override string ToString()
-        {
-            return HabitInitial;
-        }
-
-        public override bool Equals(object obj)
-        {
-            return obj is Habits habits &&
-                   Id == habits.Id;
-        }
+        public Habits() { }
 
         public override int GetHashCode()
         {

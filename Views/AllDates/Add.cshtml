@@ -1,0 +1,16 @@
+﻿@model TrackMyHabit.Models.AllDates
+
+<h1>Add a date</h1>
+<a asp-action="AddHabits">Add Date</a>
+
+<form asp-controller="AllDates" asp-action="Add" method="post">
+    <div class="form-group">
+        <label asp-for="Date" ></label>
+        <input asp-for="Date" value="DateTime.Now" />
+        <span asp-validation-for="Date"></span>
+    </div>
+    <input type="submit" value="Add Date" />
+</form>
+<div>
+    <a asp-controller="Habits" asp-action="Index">Back to List</a>
+</div>

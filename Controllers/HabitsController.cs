@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TrackMyHabit.Data;
 using TrackMyHabit.Models;
+using TrackMyHabit.Models.HabitsViewModels;
 
 namespace TrackMyHabit.Controllers
 {
@@ -68,14 +69,20 @@ namespace TrackMyHabit.Controllers
                 return NotFound();
             }
 
+            List<HabitsDates> habitsDates = _context.HabitsDates
+                .Where(hd => hd.HabitsID == id)
+                .Include(hd => hd.AllDates)
+                .ToList();
+
             var habits = await _context.Habits
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (habits == null)
             {
                 return NotFound();
             }
 
-            return View(habits);
+            HabitDetailsViewModel viewModel = new HabitDetailsViewModel(habits, habitsDates);
+            return View(viewModel);
         }
 
         // GET: Habits/Create
@@ -89,7 +96,7 @@ namespace TrackMyHabit.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Date,HabitInitial")] Habits habits)
+        public async Task<IActionResult> Create([Bind("Id,Name,HabitInitial,Colour")] Habits habits)
         {
             if (ModelState.IsValid)
             {
@@ -121,9 +128,9 @@ namespace TrackMyHabit.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Date,HabitInitial")] Habits habits)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Date")] Habits habits)
         {
-            if (id != habits.Id)
+            if (id != habits.ID)
             {
                 return NotFound();
             }
@@ -137,7 +144,7 @@ namespace TrackMyHabit.Controllers
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!HabitsExists(habits.Id))
+                    if (!HabitsExists(habits.ID))
                     {
                         return NotFound();
                     }
@@ -160,7 +167,7 @@ namespace TrackMyHabit.Controllers
             }
 
             var habits = await _context.Habits
-                .FirstOrDefaultAsync(m => m.Id == id);
+                .FirstOrDefaultAsync(m => m.ID == id);
             if (habits == null)
             {
                 return NotFound();
@@ -182,7 +189,7 @@ namespace TrackMyHabit.Controllers
 
         private bool HabitsExists(int id)
         {
-            return _context.Habits.Any(e => e.Id == id);
+            return _context.Habits.Any(e => e.ID == id);
         }
     }
 }

@@ -7,7 +7,8 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="nav-item px-2">Create New Habit</a>
+    <a asp-controller="AllDates" asp-action="Add" class="nav-item px-2">Add New Date</a>
 </p>
 
 <form asp-action="Index" method="get">
@@ -29,7 +30,7 @@
                 @Html.DisplayNameFor(model => model.HabitInitial)
             </th>
             <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["DateSortParm"]">@Html.DisplayNameFor(model => model.Date)</a>
+                @Html.DisplayNameFor(model => model.Colour)
             </th>
         </tr>
     </thead>
@@ -40,15 +41,16 @@
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
             <td>
-                @Html.DisplayFor(ModelItem => item.HabitInitial)
+                @Html.DisplayFor(modelItem => item.HabitInitial)
+            </td>
+            <td style="background-color:@item.Colour">
+                @Html.DisplayFor(modelItem => item.Colour)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.Date)
-            </td>
-            <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                <a asp-controller="AllDates" asp-action="AddHabit" asp-route-id="@item.ID" class="nav-item px-2">Add Date</a>
+                <a asp-action="Edit" asp-route-id="@item.ID" class="nav-item px-2">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.ID" class="nav-item px-2">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.ID" class="nav-item px-2">Delete</a>
             </td>
         </tr>
 }

@@ -15,7 +15,7 @@ namespace TrackMyHabit.Migrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.12")
+                .HasAnnotation("ProductVersion", "3.1.13")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -219,9 +219,9 @@ namespace TrackMyHabit.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("TrackMyHabit.Models.Habits", b =>
+            modelBuilder.Entity("TrackMyHabit.Models.AllDates", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -229,15 +229,45 @@ namespace TrackMyHabit.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.HasKey("ID");
+
+                    b.ToTable("AllDates");
+                });
+
+            modelBuilder.Entity("TrackMyHabit.Models.Habits", b =>
+                {
+                    b.Property<int>("ID")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("Colour")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("HabitInitial")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.ToTable("Habits");
+                });
+
+            modelBuilder.Entity("TrackMyHabit.Models.HabitsDates", b =>
+                {
+                    b.Property<int>("AllDatesID")
+                        .HasColumnType("int");
+
+                    b.Property<int>("HabitsID")
+                        .HasColumnType("int");
+
+                    b.HasKey("AllDatesID", "HabitsID");
+
+                    b.HasIndex("HabitsID");
+
+                    b.ToTable("HabitsDates");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -287,6 +317,21 @@ namespace TrackMyHabit.Migrations
                     b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", null)
                         .WithMany()
                         .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("TrackMyHabit.Models.HabitsDates", b =>
+                {
+                    b.HasOne("TrackMyHabit.Models.AllDates", "AllDates")
+                        .WithMany()
+                        .HasForeignKey("AllDatesID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("TrackMyHabit.Models.Habits", "Habit")
+                        .WithMany()
+                        .HasForeignKey("HabitsID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });
