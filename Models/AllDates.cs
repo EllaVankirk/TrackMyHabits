@@ -18,6 +18,12 @@ namespace TrackMyHabit.Models
             Date = date;
         }
 
+        public override string ToString()
+        {
+            return Date.Date.ToString("MM/d/yyyy");
+
+        }
+
         public AllDates() { }
     }
 }

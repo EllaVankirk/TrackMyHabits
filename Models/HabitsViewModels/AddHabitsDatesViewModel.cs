@@ -12,6 +12,7 @@ namespace TrackMyHabit.Models.HabitsViewModels
        public Habits Habit { get; set; }
 
         public int AllDatesID { get; set; }
+        public AllDates AllDates { get; set; }
 
         public List<SelectListItem> Dates { get; set; }
 
@@ -23,11 +24,16 @@ namespace TrackMyHabit.Models.HabitsViewModels
                 Dates.Add(new SelectListItem
                 {
                     Value = date.ID.ToString(),
-                    Text = date.Date.ToString()
+                    Text = date.Date.ToString("MM/d/yyyy")
                 });
 
             }
             Habit = theHabit;
+        }
+        public AddHabitsDatesViewModel(Habits theHabit, AllDates theDate)
+        {
+            Habit = theHabit;
+            AllDates = theDate;
         }
 
         public AddHabitsDatesViewModel() { }

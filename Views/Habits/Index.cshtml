@@ -7,7 +7,8 @@
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a asp-action="Create" class="nav-item px-2">Create New Habit</a>
+    <a asp-controller="AllDates" asp-action="Add" class="nav-item px-2">Add New Date</a>
 </p>
 <table class="table">
     <thead>
@@ -36,9 +37,10 @@
                 @Html.DisplayFor(modelItem => item.Colour)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.ID">Edit</a>
-                <a asp-action="Details" asp-route-id="@item.ID">Details</a>
-                <a asp-action="Delete" asp-route-id="@item.ID">Delete</a>
+                <a asp-controller="AllDates" asp-action="AddHabit" asp-route-id="@item.ID" class="nav-item px-2">Add Date</a>
+                <a asp-action="Edit" asp-route-id="@item.ID" class="nav-item px-2">Edit</a>
+                <a asp-action="Details" asp-route-id="@item.ID" class="nav-item px-2">Details</a>
+                <a asp-action="Delete" asp-route-id="@item.ID" class="nav-item px-2">Delete</a>
             </td>
         </tr>
 }

@@ -42,6 +42,8 @@ namespace TrackMyHabit.Controllers
             return View("Add", dates);
         }
 
+
+        // responds to URLs like /Tag/AddEvent/5 (where 5 is an event ID)
         public IActionResult AddHabit(int id)
         {
             Habits theHabit = _context.Habits.Find(id);

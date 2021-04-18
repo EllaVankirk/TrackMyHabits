@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using TrackMyHabit.Data;
 using TrackMyHabit.Models;
+using TrackMyHabit.Models.HabitsViewModels;
 
 namespace TrackMyHabit.Controllers
 {
@@ -33,6 +34,11 @@ namespace TrackMyHabit.Controllers
                 return NotFound();
             }
 
+            List<HabitsDates> habitsDates = _context.HabitsDates
+                .Where(hd => hd.HabitsID == id)
+                .Include(hd => hd.AllDates)
+                .ToList();
+
             var habits = await _context.Habits
                 .FirstOrDefaultAsync(m => m.ID == id);
             if (habits == null)
@@ -40,7 +46,8 @@ namespace TrackMyHabit.Controllers
                 return NotFound();
             }
 
-            return View(habits);
+            HabitDetailsViewModel viewModel = new HabitDetailsViewModel(habits, habitsDates);
+            return View(viewModel);
         }
 
         // GET: Habits/Create
