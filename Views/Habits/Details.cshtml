@@ -41,26 +41,3 @@
     <a asp-controller="AllDates" asp-action="AddHabit" asp-route-id="@Model.HabitID" class="nav-item px-2">Add Date</a>
     <a asp-action="Index" class="nav-item px-2">Back to List</a>
 </div>
-
-<div>
-    <h4>Habits</h4>
-    <hr />
-    <table class="table">
-        <tr>
-            <th> @Html.DisplayNameFor(model => model.Name)</th>
-            <td>@Html.DisplayFor(model => model.Name)</td>
-        </tr>
-        <tr>
-            <th> @Html.DisplayNameFor(model => model.HabitInitial)</th>
-            <td> @Html.DisplayFor(model => model.HabitInitial) </td>
-        </tr>
-        <tr>
-            <th> @Html.DisplayNameFor(model => model.Colour)</th>
-            <td style="background-color:@Model.Colour"> @Html.DisplayFor(model => model.Colour)</td>
-        </tr>
-        <tr>
-            <th>@Html.DisplayNameFor(model => model.DateText)</th>
-            <td>@Html.DisplayFor(model => Model.DateText)</td>
-        </tr>
-    </table>
-</div>

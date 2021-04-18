@@ -1,7 +1,7 @@
 ﻿@model TrackMyHabit.Models.HabitsViewModels.AddHabitsDatesViewModel
 
 <h1>Add Date to Habit: @Model.Habit.Name</h1>
-
+<a asp-controller="Habits" asp-action="Index">Back to List</a>
 <form asp-controller="AllDates" asp-action="AddHabit" method="post">
     <input type="hidden" value="@Model.Habit.ID" name="HabitID" />
     <div class="form-group">
