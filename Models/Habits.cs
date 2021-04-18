@@ -14,6 +14,7 @@ namespace TrackMyHabit.Models
         public int ID { get; set; }
         public string Name { get; set; }
         public string Colour { get; set; }
+        [Display(Name="Initial")]
         public string HabitInitial { get; set; }
 
         public Habits(string name, string colour, string habitInitial)
@@ -27,7 +28,7 @@ namespace TrackMyHabit.Models
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id);
+            return HashCode.Combine(ID);
         }
     }
 }

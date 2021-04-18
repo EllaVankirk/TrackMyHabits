@@ -23,43 +23,44 @@ namespace TrackMyHabit.Controllers
         }
 
         // GET: Habits
-        //public async Task<IActionResult> Index()
-        //{
-        //    return View(await _context.Habits.ToListAsync());
-        //}
-
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        public async Task<IActionResult> Index()
         {
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-            ViewData["CurrentFilter"] = searchString;
-
-            var habits = from h in _context.Habits
-                         select h;
-
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                habits = habits.Where(h => h.Name.Contains(searchString));
-            }
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    habits = habits.OrderByDescending(h => h.Name);
-                    break;
-                case "Date":
-                    habits = habits.OrderBy(h => h.Date);
-                    break;
-                case "date_desc":
-                    habits = habits.OrderByDescending(h => h.Date);
-                    break;
-                default:
-                    habits = habits.OrderBy(h => h.Name);
-                    break;
-            }
-            return View(await habits.AsNoTracking().ToListAsync());
+            return View(await _context.Habits.ToListAsync());
         }
+
+        //Index Sort and Search method
+        //public async Task<IActionResult> Index(string sortOrder, string searchString)
+        //{
+        //    ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+        //    ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+        //    ViewData["CurrentFilter"] = searchString;
+
+        //    var habits = from h in _context.Habits
+        //                 select h;
+
+
+        //    if (!String.IsNullOrEmpty(searchString))
+        //    {
+        //        habits = habits.Where(h => h.Name.Contains(searchString));
+        //    }
+
+        //    switch (sortOrder)
+        //    {
+        //        case "name_desc":
+        //            habits = habits.OrderByDescending(h => h.Name);
+        //            break;
+        //        case "Date":
+        //            habits = habits.OrderBy(h => h.Date);
+        //            break;
+        //        case "date_desc":
+        //            habits = habits.OrderByDescending(h => h.Date);
+        //            break;
+        //        default:
+        //            habits = habits.OrderBy(h => h.Name);
+        //            break;
+        //    }
+        //    return View(await habits.AsNoTracking().ToListAsync());
+        //}
 
         // GET: Habits/Details/5
         public async Task<IActionResult> Details(int? id)

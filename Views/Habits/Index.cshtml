@@ -9,6 +9,7 @@
 <p>
     <a asp-action="Create" class="nav-item px-2">Create New Habit</a>
     <a asp-controller="AllDates" asp-action="Add" class="nav-item px-2">Add New Date</a>
+    <a asp-controller="AllDates" asp-action="Index" class="nav-item px-2">View List of Dates</a>
 </p>
 
 <form asp-action="Index" method="get">
@@ -24,7 +25,6 @@
         <tr>
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Name)</a>
-            </th>
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.HabitInitial)
