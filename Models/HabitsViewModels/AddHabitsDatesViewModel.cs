@@ -30,11 +30,6 @@ namespace TrackMyHabit.Models.HabitsViewModels
             }
             Habit = theHabit;
         }
-        public AddHabitsDatesViewModel(Habits theHabit, AllDates theDate)
-        {
-            Habit = theHabit;
-            AllDates = theDate;
-        }
 
         public AddHabitsDatesViewModel() { }
     }

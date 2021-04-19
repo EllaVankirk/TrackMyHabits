@@ -1,4 +1,4 @@
-﻿@model TrackMyHabit.Models.Calendars;
+﻿@model TrackMyHabit.Models.HabitsViewModels.DisplayHabitsOnCalendarViewModel;
 
 <div class="container">
     <h2 class="display-4 mb-4 text-center">@Model.DisplayDate.ToString("MMMM") @Model.Year</h2>
@@ -22,25 +22,27 @@
     </script>
     <div>
         <table class="table table-bordered">
-            <thead class="thead-dark">
                 <tr>
                     @foreach (var day in Enum.GetValues(typeof(DayOfWeek)))
                     {
                         <th class="text-center" width="10%">@day</th>
                     }
                 </tr>
-            </thead>
-            <tbody>
-                @foreach (var days in Model.Dates)
+                @foreach (var days in Model.CalendarDates)
                 {
                         if (days.DayOfWeek == DayOfWeek.Sunday && days != Model.StartDate)
                         {
                             <tr></tr>
                         }
+                        <td style="height: 100px">@days.Date.Day
+                        </td>
+                    //Look at all the dates in CalendarDates
+                    //if any date in AllDates.Dates matches with CalendarDates
+                    //and AllDates[i].ID is in HabitsDates.AllDatesID
+                    //then display the HabitInitial where it matches with HabitsDates.AllDatesID
 
-                        <td style="height: 100px">@days.Date.Day @Model.Habit </td>
+                    //
                 }
-                </tbody>
             </table>
      </div>
 </div>

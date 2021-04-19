@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using TrackMyHabit.Data;
 using TrackMyHabit.Models;
+using TrackMyHabit.Models.HabitsViewModels;
 
 namespace TrackMyHabit.Controllers
 {
@@ -22,10 +23,21 @@ namespace TrackMyHabit.Controllers
         public IActionResult Index()
         {
             Calendars calendars = new Calendars(DateTime.Now);
-            List<Habits> habit = context.Habits.ToList();
-            calendars.Habit = habit;
 
-            return View(calendars);
+            //List of Habit Dates populated with the dates
+            List<HabitsDates> habitDates = (from hd in context.HabitsDates
+                                            join ad in context.AllDates
+                                            on hd.AllDatesID equals ad.ID
+                                            where ad.ID == hd.AllDatesID
+                                            select hd).ToList();
+
+            var habits = (from h in context.Habits
+                          join hd in context.HabitsDates
+                          on h.ID equals hd.HabitsID
+                          where hd.HabitsID == h.ID
+                          select h).ToList();
+            DisplayHabitsOnCalendarViewModel viewModel = new DisplayHabitsOnCalendarViewModel(habits, habitDates, calendars);
+            return View(viewModel);
         }
 
         public IActionResult ChangeMonth(string btnValue, DateTime currentMonth)
