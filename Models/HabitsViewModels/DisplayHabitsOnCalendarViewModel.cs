@@ -24,25 +24,31 @@ namespace TrackMyHabit.Models.HabitsViewModels
         public int Year { get; set; }
         public IEnumerable<DateTime> CalendarDates { get; set; }
 
-        public DisplayHabitsOnCalendarViewModel(List<Habits> theHabits, List<HabitsDates> habitDates, Calendars theCalendar)
+        public DisplayHabitsOnCalendarViewModel(Calendars theCalendar)
         {
-            //HabitID = theHabit.ID;
-            //HabitInitials = theHabit.HabitInitial;
-            //Colour = theHabit.Colour;
-            HabitDates = habitDates;
-            AllHabits;
-
             DisplayDate = theCalendar.DisplayDate;
             Month = DisplayDate.Month;
             Year = DisplayDate.Year;
             FirstOfMonth = new DateTime(DisplayDate.Year, DisplayDate.Month, 1);
             StartDate = FirstOfMonth.AddDays(-(int)FirstOfMonth.DayOfWeek);
             CalendarDates = Enumerable.Range(0, 42).Select(i => StartDate.AddDays(i));
-
-            //this whole block populates HabitDates with a string of dates.
-            //habitDates refers to the viewModel by calling AllDates, AllDates then goes to it's own DateTime property called Date and turns it all into a string
-
-
         }
+        //public DisplayHabitsOnCalendarViewModel(List<Habits> theHabits, List<HabitsDates> habitDates, Calendars theCalendar)
+        //{
+        //    //HabitID = theHabit.ID;
+        //    //HabitInitials = theHabit.HabitInitial;
+        //    //Colour = theHabit.Colour;
+        //    HabitDates = habitDates;
+        //    AllHabits = theHabits;
+
+
+        //    DisplayDate = theCalendar.DisplayDate;
+        //    Month = DisplayDate.Month;
+        //    Year = DisplayDate.Year;
+        //    FirstOfMonth = new DateTime(DisplayDate.Year, DisplayDate.Month, 1);
+        //    StartDate = FirstOfMonth.AddDays(-(int)FirstOfMonth.DayOfWeek);
+        //    CalendarDates = Enumerable.Range(0, 42).Select(i => StartDate.AddDays(i));
+
+        //}
     }
 }
