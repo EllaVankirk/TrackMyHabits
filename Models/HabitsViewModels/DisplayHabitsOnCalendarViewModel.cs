@@ -12,6 +12,7 @@ namespace TrackMyHabit.Models.HabitsViewModels
         public string Colour { get; set; }
         public List<Habits> AllHabits { get; set; }
         public List<HabitsDates> HabitDates { get; set; }
+        public List<AllDates> ListOfDates { get; set; }
 
         public Habits Habit { get; set; }
         public AllDates AllDates { get; set; }
@@ -24,7 +25,7 @@ namespace TrackMyHabit.Models.HabitsViewModels
         public int Year { get; set; }
         public IEnumerable<DateTime> CalendarDates { get; set; }
 
-        public DisplayHabitsOnCalendarViewModel(Calendars theCalendar)
+        public DisplayHabitsOnCalendarViewModel(Calendars theCalendar, List<HabitsDates> habitsDates)
         {
             DisplayDate = theCalendar.DisplayDate;
             Month = DisplayDate.Month;
@@ -32,23 +33,25 @@ namespace TrackMyHabit.Models.HabitsViewModels
             FirstOfMonth = new DateTime(DisplayDate.Year, DisplayDate.Month, 1);
             StartDate = FirstOfMonth.AddDays(-(int)FirstOfMonth.DayOfWeek);
             CalendarDates = Enumerable.Range(0, 42).Select(i => StartDate.AddDays(i));
+
+            HabitDates = habitsDates;
         }
-        //public DisplayHabitsOnCalendarViewModel(List<Habits> theHabits, List<HabitsDates> habitDates, Calendars theCalendar)
-        //{
-        //    //HabitID = theHabit.ID;
-        //    //HabitInitials = theHabit.HabitInitial;
-        //    //Colour = theHabit.Colour;
-        //    HabitDates = habitDates;
-        //    AllHabits = theHabits;
+        public DisplayHabitsOnCalendarViewModel(List<Habits> theHabits, List<HabitsDates> habitDates, Calendars theCalendar)
+        {
+            //HabitID = theHabit.ID;
+            //HabitInitials = theHabit.HabitInitial;
+            //Colour = theHabit.Colour;
+            HabitDates = habitDates;
+            AllHabits = theHabits;
 
 
-        //    DisplayDate = theCalendar.DisplayDate;
-        //    Month = DisplayDate.Month;
-        //    Year = DisplayDate.Year;
-        //    FirstOfMonth = new DateTime(DisplayDate.Year, DisplayDate.Month, 1);
-        //    StartDate = FirstOfMonth.AddDays(-(int)FirstOfMonth.DayOfWeek);
-        //    CalendarDates = Enumerable.Range(0, 42).Select(i => StartDate.AddDays(i));
+            DisplayDate = theCalendar.DisplayDate;
+            Month = DisplayDate.Month;
+            Year = DisplayDate.Year;
+            FirstOfMonth = new DateTime(DisplayDate.Year, DisplayDate.Month, 1);
+            StartDate = FirstOfMonth.AddDays(-(int)FirstOfMonth.DayOfWeek);
+            CalendarDates = Enumerable.Range(0, 42).Select(i => StartDate.AddDays(i));
 
-        //}
+        }
     }
 }

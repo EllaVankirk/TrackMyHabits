@@ -4,7 +4,7 @@
     <h2 class="display-4 mb-4 text-center">@Model.DisplayDate.ToString("MMMM") @Model.Year</h2>
     <p>Click the day to add a color coded habit!</p>
     <form method="post" asp-controller="Calendars" asp-action="ChangeMonth" id="myform">
-        <input type="text" id="btnVal" name="btnValue" hidden  />
+        <input type="text" id="btnVal" name="btnValue" hidden />
         <input type="datetime" value="@Model.DisplayDate" name="currentMonth" hidden />
         <button type="button" name="next" value="Next" class="btn-default float-right" onclick="myButtonClick('next')">Next</button>
         <button type="button" name="previous" value="Previous" class="btn-default float-left" onclick="myButtonClick('previous')">Previous</button>
@@ -22,24 +22,41 @@
     </script>
     <div>
         <table class="table table-bordered">
-                <tr>
-                    @foreach (var day in Enum.GetValues(typeof(DayOfWeek)))
-                    {
-                        <th class="text-center" width="10%">@day</th>
-                    }
-                </tr>
-                @foreach (var days in Model.CalendarDates)
+            <tr>
+                @foreach (var day in Enum.GetValues(typeof(DayOfWeek)))
                 {
-                        if (days.DayOfWeek == DayOfWeek.Sunday && days != Model.StartDate)
-                        {
-                            <tr></tr>
-                        }
-                        <td style="height: 100px">@days.Date.Day</td>
-                    //Look at all the dates in CalendarDates
-                    //if any date in AllDates.Dates matches with CalendarDates
-                    //and AllDates[i].ID is in HabitsDates.AllDatesID
-                    //then display the HabitInitial where it matches with HabitsDates.AllDatesID
+                    <th class="text-center" width="10%">@day</th>
                 }
-            </table>
-     </div>
+            </tr>
+            @foreach (var days in Model.CalendarDates)
+            {
+                if (days.DayOfWeek == DayOfWeek.Sunday && days != Model.StartDate)
+                {
+                    <tr></tr>
+                }
+                <td style="height: 100px">
+                    @days.Date.Day
+                    @foreach (var hd in Model.HabitDates)
+                    {
+                        if (hd.AllDates.Date.Day == days.Date.Day)
+                        {
+                            <p style="background-color:@hd.Habit.Colour">@hd.Habit.HabitInitial </p>
+                        }
+                    }
+                </td>
+
+            }
+        </table>
+
+        @*@foreach (var days in Model.CalendarDates)
+            {
+                for (var i = 0; i < @Model.ListOfDates.Count; i++)
+                    {
+                        if (Model.AllDates.Date[i] == days)
+                        {
+
+                        }
+                    }
+            }*@
+    </div>
 </div>

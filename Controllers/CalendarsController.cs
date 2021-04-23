@@ -22,35 +22,12 @@ namespace TrackMyHabit.Controllers
         }
         public IActionResult Index()
         {
+
             Calendars calendars = new Calendars(DateTime.Now);
-            //List of habitsdates
-            List<HabitsDates> habitDates = context.HabitsDates.ToList();
-            //List of AllDates
-            List<AllDates> allTheDates = context.AllDates.ToList();
 
-            //List of All the dates in the joined table. Just because it was in AllDates doesn't mean it has a habit associated with it.
-            List<AllDates> selectedDates = (from d in context.AllDates
-                                       join hd in context.HabitsDates
-                                       on d.ID equals hd.AllDatesID
-                                       where hd.AllDatesID == d.ID
-                                       select d).ToList();
+            List<HabitsDates> habitDates = context.HabitsDates.Where(o => o.AllDates.Date.Month == calendars.Month).Include(h => h.Habit).ToList();
 
-            //list of habits that are in the joined table. Just because it's in Habits doesn't mean it was had a date associated with it.
-            var habits = (from h in context.Habits
-                          join hd in context.HabitsDates
-                          on h.ID equals hd.HabitsID
-                          where hd.HabitsID == h.ID
-                          select h).ToList();
-            foreach (var date in calendars.RangeOfDates)
-            {
-                foreach(var day in allTheDates)
-                {
-
-                }
-
-            }
-
-            DisplayHabitsOnCalendarViewModel viewModel = new DisplayHabitsOnCalendarViewModel(calendars);
+            DisplayHabitsOnCalendarViewModel viewModel = new DisplayHabitsOnCalendarViewModel(calendars, habitDates);
             return View(viewModel);
         }
 
@@ -59,20 +36,16 @@ namespace TrackMyHabit.Controllers
             Calendars nextCalendar = new Calendars(currentMonth.AddMonths(+1));
             Calendars prevCalendar = new Calendars(currentMonth.AddMonths(-1));
 
-            var habits = (from h in context.Habits
-                          join hd in context.HabitsDates
-                          on h.ID equals hd.HabitsID
-                          where hd.HabitsID == h.ID
-                          select h).ToList();
-
             if (btnValue == "next")
             {
-                DisplayHabitsOnCalendarViewModel viewModel = new DisplayHabitsOnCalendarViewModel(nextCalendar);
+                List<HabitsDates> habitDates = context.HabitsDates.Where(o => o.AllDates.Date.Month == nextCalendar.Month).Include(h => h.Habit).Include(ad => ad.AllDates).ToList();
+                DisplayHabitsOnCalendarViewModel viewModel = new DisplayHabitsOnCalendarViewModel(nextCalendar, habitDates);
                 return View("Index", viewModel);
             }
             else
             {
-                DisplayHabitsOnCalendarViewModel viewModel = new DisplayHabitsOnCalendarViewModel(prevCalendar);
+                List<HabitsDates> habitDates = context.HabitsDates.Where(o => o.AllDates.Date.Month == prevCalendar.Month).Include(h => h.Habit).Include(ad => ad.AllDates).ToList();
+                DisplayHabitsOnCalendarViewModel viewModel = new DisplayHabitsOnCalendarViewModel(prevCalendar, habitDates);
                 return View("Index", viewModel);
             }
         }

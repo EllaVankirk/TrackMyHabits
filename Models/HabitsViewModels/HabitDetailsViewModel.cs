@@ -26,6 +26,7 @@ namespace TrackMyHabit.Models.HabitsViewModels
 
             DateText = "";
 
+            //for every item in habitDates, add them all to the string called DateText
             for(var i = 0; i < habitDates.Count; i++)
             {
                 DateText += habitDates[i].AllDates.Date.ToString("MM/d/yyyy");

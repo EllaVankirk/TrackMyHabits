@@ -17,6 +17,7 @@ namespace TrackMyHabit.Models
         [Display(Name="Initial")]
         public string HabitInitial { get; set; }
 
+
         public Habits(string name, string colour, string habitInitial)
         {
             Name = name;
