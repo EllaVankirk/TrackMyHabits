@@ -22,10 +22,9 @@ namespace TrackMyHabit.Controllers
         }
         public IActionResult Index()
         {
-
             Calendars calendars = new Calendars(DateTime.Now);
-
             List<HabitsDates> habitDates = context.HabitsDates.Where(o => o.AllDates.Date.Month == calendars.Month).Include(h => h.Habit).ToList();
+            var allDates = context.AllDates.ToList();
 
             DisplayHabitsOnCalendarViewModel viewModel = new DisplayHabitsOnCalendarViewModel(calendars, habitDates);
             return View(viewModel);

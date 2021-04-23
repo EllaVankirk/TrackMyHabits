@@ -40,23 +40,12 @@
                     {
                         if (hd.AllDates.Date.Day == days.Date.Day)
                         {
-                            <p style="background-color:@hd.Habit.Colour">@hd.Habit.HabitInitial </p>
+                            <p style="height:30px; width:30px; border-radius:50%; background-color:@hd.Habit.Colour"></p>
                         }
                     }
                 </td>
 
             }
         </table>
-
-        @*@foreach (var days in Model.CalendarDates)
-            {
-                for (var i = 0; i < @Model.ListOfDates.Count; i++)
-                    {
-                        if (Model.AllDates.Date[i] == days)
-                        {
-
-                        }
-                    }
-            }*@
     </div>
 </div>

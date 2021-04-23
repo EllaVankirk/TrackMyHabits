@@ -7,15 +7,7 @@ namespace TrackMyHabit.Models.HabitsViewModels
 {
     public class DisplayHabitsOnCalendarViewModel
     {
-        public int HabitID { get; set; }
-        public string HabitInitials { get; set; }
-        public string Colour { get; set; }
-        public List<Habits> AllHabits { get; set; }
         public List<HabitsDates> HabitDates { get; set; }
-        public List<AllDates> ListOfDates { get; set; }
-
-        public Habits Habit { get; set; }
-        public AllDates AllDates { get; set; }
 
         public DateTime Day { get; set; } = DateTime.Now;
         public DateTime DisplayDate { get; set; }
@@ -35,23 +27,6 @@ namespace TrackMyHabit.Models.HabitsViewModels
             CalendarDates = Enumerable.Range(0, 42).Select(i => StartDate.AddDays(i));
 
             HabitDates = habitsDates;
-        }
-        public DisplayHabitsOnCalendarViewModel(List<Habits> theHabits, List<HabitsDates> habitDates, Calendars theCalendar)
-        {
-            //HabitID = theHabit.ID;
-            //HabitInitials = theHabit.HabitInitial;
-            //Colour = theHabit.Colour;
-            HabitDates = habitDates;
-            AllHabits = theHabits;
-
-
-            DisplayDate = theCalendar.DisplayDate;
-            Month = DisplayDate.Month;
-            Year = DisplayDate.Year;
-            FirstOfMonth = new DateTime(DisplayDate.Year, DisplayDate.Month, 1);
-            StartDate = FirstOfMonth.AddDays(-(int)FirstOfMonth.DayOfWeek);
-            CalendarDates = Enumerable.Range(0, 42).Select(i => StartDate.AddDays(i));
-
         }
     }
 }
