@@ -97,7 +97,7 @@ namespace TrackMyHabit.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,HabitInitial,Colour")] Habits habits)
+        public async Task<IActionResult> Create([Bind("ID,Name,Colour,HabitInitial")] Habits habits)
         {
             if (ModelState.IsValid)
             {
@@ -109,6 +109,7 @@ namespace TrackMyHabit.Controllers
         }
 
         // GET: Habits/Edit/5
+        [HttpGet]
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -129,7 +130,7 @@ namespace TrackMyHabit.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Date")] Habits habits)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Colour,HabitInitial")] Habits habits)
         {
             if (id != habits.ID)
             {
@@ -154,9 +155,9 @@ namespace TrackMyHabit.Controllers
                         throw;
                     }
                 }
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction("Index");
             }
-            return View(habits);
+            return View("Index", habits);
         }
 
         // GET: Habits/Delete/5
