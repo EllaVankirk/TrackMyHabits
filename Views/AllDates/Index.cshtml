@@ -11,15 +11,13 @@
 }
 else
 {
-    <table class="table">
+    <table>
         <tr>
-            <th>ID</th>
             <th>Dates</th>
         </tr>
         @foreach (var date in Model)
         {
             <tr>
-                <td>@date.ID</td>
                 <td>@date.Date.ToString("MM/d/yyyy")</td>
                 <td>
                     <a asp-action="Delete" asp-route-id="@date.ID">Delete</a>

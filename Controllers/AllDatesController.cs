@@ -26,8 +26,7 @@ namespace TrackMyHabit.Controllers
 
         public IActionResult Add()
         {
-            AllDates dates = new AllDates();
-            return View(dates);
+            return View();
         }
 
         [HttpPost]
@@ -35,9 +34,13 @@ namespace TrackMyHabit.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.AllDates.Add(dates);
-                _context.SaveChanges();
-                return Redirect("/AllDates");
+                    _context.AllDates.Add(dates);
+                    _context.SaveChanges();
+                    return Redirect("/AllDates");
+            }
+            else
+            {
+              ViewBag.ErrorMessage = "This date has already been added.";
             }
             return View("Add", dates);
         }
