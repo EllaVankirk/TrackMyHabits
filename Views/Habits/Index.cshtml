@@ -4,12 +4,12 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
+<h1 style="font-family:'Open Sans', sans-serif">Collection of habits</h1>
 
 <p>
-    <a asp-action="Create" class="nav-item px-2">Create New Habit</a>
-    <a asp-controller="AllDates" asp-action="Add" class="nav-item px-2">Add New Date</a>
-    <a asp-controller="AllDates" asp-action="Index" class="nav-item px-2">View List of Dates</a>
+    <a asp-action="Create" style="font-family:'Dancing script' cursive">Create New Habit</a>
+    <a asp-controller="AllDates" asp-action="Add" class="nav-item px-2" style="font-family:'Lato' sans-serif">Add New Date</a>
+    <a asp-controller="AllDates" asp-action="Index" class="nav-item px-2" style="font-family:'Lato' sans-serif">View List of Dates</a>
 </p>
 
 <form asp-action="Index" method="get">
@@ -21,7 +21,7 @@
 </form>
 <table class="table">
     <thead>
-        <tr>
+        <tr style="font-family:'Lato' sans-serif">
             <th>
                 <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Name)</a>
             </th>
@@ -32,7 +32,7 @@
     </thead>
     <tbody>
 @foreach (var item in Model) {
-        <tr>
+        <tr style="font-family:'Open Sans', sans-serif">
             <td>
                 @Html.DisplayFor(modelItem => item.Name)
             </td>
