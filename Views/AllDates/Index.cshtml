@@ -1,28 +1,23 @@
 ﻿@model List<TrackMyHabit.Models.AllDates>
-
-<h1>All Dates</h1>
-<a asp-action="Add" class="nav-item px-2">Add Date</a>
-<a asp-controller="Habits" asp-action="Index" class="nav-item px-2">Back to List</a>
-
-@if (Model.Count == 0)
-{
-    <p> No dates yet!</p>
-
-}
-else
-{
-    <table>
-        <tr>
-            <th>Dates</th>
-        </tr>
-        @foreach (var date in Model)
-        {
-            <tr>
-                <td>@date.Date.ToString("MM/d/yyyy")</td>
-                <td>
-                    <a asp-action="Delete" asp-route-id="@date.ID">Delete</a>
-                </td>
-            </tr>
-        }
-    </table>
-}
+<div>
+    <div>
+        <h1>All Dates</h1>
+        <a asp-action="Add" class="nav-item px-2">Add Date</a>
+        <a asp-controller="Habits" asp-action="Index" class="nav-item px-2">Back to List</a>
+    </div>
+    <div>
+        @if(Model.Count == 0)
+            {
+                <p>No dates yet!</p>
+            }
+        else
+            {
+                @foreach(var date in Model)
+                {
+                    <ul>
+                        <li style="list-style:none; line-height:200%">@date.Date.ToString("MM/dd/yyyy") <a asp-action="Delete" asp-route-id="@date.ID">Delete</a></li>
+                    </ul>
+                }
+            }
+    </div>
+</div>
