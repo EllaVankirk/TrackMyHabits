@@ -10,8 +10,8 @@ using TrackMyHabit.Data;
 namespace TrackMyHabit.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210425181959_Second")]
-    partial class Second
+    [Migration("20210426123208_SecondMigration")]
+    partial class SecondMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -244,9 +244,6 @@ namespace TrackMyHabit.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Colour")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HabitInitial")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")

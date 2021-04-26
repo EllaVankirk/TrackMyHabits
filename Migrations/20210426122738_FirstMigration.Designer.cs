@@ -10,8 +10,8 @@ using TrackMyHabit.Data;
 namespace TrackMyHabit.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210425153147_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20210426122738_FirstMigration")]
+    partial class FirstMigration
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

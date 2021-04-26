@@ -14,15 +14,12 @@ namespace TrackMyHabit.Models
         public int ID { get; set; }
         public string Name { get; set; }
         public string Colour { get; set; }
-        [Display(Name="Initial")]
-        public string HabitInitial { get; set; }
 
 
         public Habits(string name, string colour, string habitInitial)
         {
             Name = name;
             Colour = colour;
-            HabitInitial = habitInitial;
         }
 
         public Habits() { }

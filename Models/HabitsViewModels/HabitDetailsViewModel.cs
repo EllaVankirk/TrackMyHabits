@@ -22,7 +22,6 @@ namespace TrackMyHabit.Models.HabitsViewModels
             HabitID = theHabit.ID;
             Name = theHabit.Name;
             Colour = theHabit.Colour;
-            HabitInitial = theHabit.HabitInitial;
 
             DateText = "";
 
