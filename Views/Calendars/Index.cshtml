@@ -41,7 +41,7 @@
                     @days.Date.Day
                     @foreach (var hd in Model.HabitDates)
                     {
-                        if (hd.AllDates.Date.Day == days.Date.Day)
+                        if (hd.AllDates.Date.Day == days.Date.Day && hd.AllDates.Date.Month == days.Date.Month)
                         {
                             <p style="height:20px; width:20px; border-radius:50%; background-color:@hd.Habit.Colour"></p>
                         }
