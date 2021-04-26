@@ -11,25 +11,38 @@
 </head>
 <body>
     <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Habits" asp-action="Index" style="font-family:'Dancing Script', cursive; font-size:50px">Track My Habits</a>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm border-bottom box-shadow mb-3" @*style="background: #283845"*@>
+            <div class="container-fluid">
+                <p class="text"style="font-family:'Dancing Script', cursive; font-size:50px">Track My Habits</p>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <div class="nav navbar-nav navbar-center navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                     <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1" style="        font-family: 'Lato', sans-serif; font-size: 25px">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                    <ul class="nav navbar-nav flex-grow-1" style="font-family: 'Lato', sans-serif; font-size: 25px">
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle nav-link text-dark text-md-center" data-toggle="dropdown" asp-area="" asp-controller="Habits" asp-action="Index">Habits</a>
+                            <ul class="dropdown-menu text-center">
+                                <li><a class="dropdown-item" asp-controller="Habits" asp-action="Index"> All Habits</a></li>
+                                <div class="dropdown-divider"></div>
+                                <li><a class="dropdown-item" asp-controller="Habits" asp-action="Create">Create habit</a></li>
+                            </ul>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="dropdown-toggle nav-link text-dark text-md-center" data-toggle="dropdown" asp-area="" asp-controller="AllDates" asp-action="Index">Dates</a>
+                            <ul class="dropdown-menu text-center">
+                                <li><a class="dropdown-item" asp-controller="AllDates" asp-action="Index"> All Dates</a></li>
+                                <div class="dropdown-divider"></div>
+                                <li><a class="dropdown-item" asp-controller="AllDates" asp-action="Add">Create new date</a></li>
+                            </ul>
                         </li>
                         <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Calendars" asp-action="Index">Calendar</a>
+                            <a class="nav-link text-dark text-md-right" asp-area="" asp-controller="Calendars" asp-action="Index">Calendar</a>
                         </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
+                        @*<li class="nav-item">
+            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+        </li>*@
                     </ul>
                 </div>
             </div>
@@ -41,8 +54,8 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container" style="font-family:'Lato', sans-serif">
+    <footer class="border-top footer text-muted" style="background-color:white">
+        <div class="container" style="font-family:'Lato', sans-serif; background-color:white">
             &copy; 2021 - Track My Habits - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
