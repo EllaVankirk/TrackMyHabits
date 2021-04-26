@@ -9,7 +9,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\BISCalendarSS.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="TagHelpers\CalendarTagHelper.cs" />
+    <None Include="wwwroot\BISCalendarSS.png" />
   </ItemGroup>
 
   <ItemGroup>
@@ -26,10 +31,6 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.5" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Image\" />
   </ItemGroup>
 
 </Project>
