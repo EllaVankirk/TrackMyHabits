@@ -31,6 +31,7 @@ namespace TrackMyHabit
             services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("ApplicationDbContext")));
             services.AddRazorPages();
+
             services.Configure<IdentityOptions>(options =>
             {
                  options.Password.RequiredLength = 6;
