@@ -12,7 +12,7 @@ using TrackMyHabit.Models.HabitsViewModels;
 
 namespace TrackMyHabit.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class HabitsController : Controller
     {
         private readonly ApplicationDbContext _context;

@@ -11,7 +11,7 @@ using TrackMyHabit.Models.HabitsViewModels;
 
 namespace TrackMyHabit.Controllers
 {
-    [Authorize]
+    //[Authorize]
     public class CalendarsController : Controller
     {
         private ApplicationDbContext context;
