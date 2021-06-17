@@ -6,30 +6,30 @@
     <title>@ViewData["Title"] - Track My Habits</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Lato&family=Open+Sans&display=swap" rel="stylesheet">
 </head>
 <body>
-    <header>
-        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
-            <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Habits" asp-action="Index">Track My Habits</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
-                        aria-expanded="false" aria-label="Toggle navigation">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-                <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                    <partial name="_LoginPartial" />
-                    <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-                        </li>
-                        <li>
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Calendars" asp-action="Index">Calendar</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
-                        </li>
-                    </ul>
-                </div>
+    <header class="container-fluid">
+        <nav class="navbar navbar-dark bg-dark navbar-expand-md navbar-toggleable-md border-bottom box-shadow mb-3">
+                <a class="navbar-brand nav-link" style="font-family:'Dancing Script', cursive; font-size:40px" asp-area="" asp-controller="Home" asp-action="Index">Track My Habits</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="nav navbar-nav navbar-center navbar-collapse collapse" id="collapsibleNavbar">
+                @*<partial name="_LoginPartial" />*@
+                <ul class="nav navbar-nav flex-grow-1" style="font-family: 'Lato', sans-serif; font-size: 25px;">
+                    <li class="nav-item m-3">
+                        <a class="nav-link" asp-area="" asp-controller="Habits" asp-action="Index">Habits</a>
+                    </li>
+                    <li class="nav-item m-3">
+                        <a class="nav-link" asp-area="" asp-controller="AllDates" asp-action="Index">Dates</a>
+                    </li>
+                    <li>
+                        <a class="nav-link m-3" asp-area="" asp-controller="Calendars" asp-action="Index">Calendar</a>
+                    </li>
+                </ul>
+                <partial name="_LoginPartial" />
             </div>
         </nav>
     </header>
@@ -39,8 +39,8 @@
         </main>
     </div>
 
-    <footer class="border-top footer text-muted">
-        <div class="container">
+    <footer class="border-top footer text-muted" style="background: #CCCCCC">
+        <div class="container" style="font-family: 'Lato', sans-serif; background: #cccccc">
             &copy; 2021 - Track My Habits - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>

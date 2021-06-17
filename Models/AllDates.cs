@@ -11,17 +11,23 @@ namespace TrackMyHabit.Models
         public int ID { get; set; }
         [DataType(DataType.Date)]
         [Required]
+
         public DateTime Date { get; set; }
+
+        public string ErrorMessage { get; set; }
 
         public AllDates (DateTime date)
         {
             Date = date;
         }
 
+        public AllDates(string errorMessage)
+        {
+            ErrorMessage = errorMessage;
+        }
         public override string ToString()
         {
             return Date.Date.ToString("MM/d/yyyy");
-
         }
 
         public AllDates() { }

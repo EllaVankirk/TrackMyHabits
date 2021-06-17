@@ -9,7 +9,12 @@
   </ItemGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\BISCalendarSS.png" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="TagHelpers\CalendarTagHelper.cs" />
+    <None Include="wwwroot\BISCalendarSS.png" />
   </ItemGroup>
 
   <ItemGroup>

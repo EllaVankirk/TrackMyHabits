@@ -1,15 +1,22 @@
 ﻿@model TrackMyHabit.Models.AllDates
 
-<h1>Add a date</h1>
-
-<form asp-controller="AllDates" asp-action="Add" method="post">
-    <div class="form-group">
-        <label asp-for="Date" ></label>
-        <input asp-for="Date" value="DateTime.Now" />
-        <span asp-validation-for="Date"></span>
+<div class="row">
+    <div class="col-md-3 offset-3">
+        <h1>Add a date</h1>
+        <hr />
+        <form asp-controller="AllDates" asp-action="Add" method="post">
+            <div class="form-group">
+                <label asp-for="Date"></label>
+                <input asp-for="Date" value="DateTime.Now" />
+                <span asp-validation-for="Date"></span>
+            </div>
+            <input type="submit" value="Add Date" />
+        </form>
+        @*<div class="alert">
+                <p class="font-weight-bold" style="color:red">@ViewBag.ErrorMessage</p>
+            </div>*@
+        <div>
+            <a asp-controller="Habits" asp-action="Index">Back to List</a>
+        </div>
     </div>
-    <input type="submit" value="Add Date" />
-</form>
-<div>
-    <a asp-controller="Habits" asp-action="Index">Back to List</a>
 </div>

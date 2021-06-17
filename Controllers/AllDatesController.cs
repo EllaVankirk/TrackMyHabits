@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using TrackMyHabit.Models.HabitsViewModels;
 
 namespace TrackMyHabit.Controllers
 {
+    //[Authorize]
     public class AllDatesController : Controller
     {
         private readonly ApplicationDbContext _context;
@@ -21,13 +23,14 @@ namespace TrackMyHabit.Controllers
         }
         public async Task<IActionResult> Index()
         {
-            return View(await _context.AllDates.ToListAsync());
+            var allDates = from ad in _context.AllDates
+                           select ad;
+            return View(await allDates.AsNoTracking().ToListAsync());
         }
 
         public IActionResult Add()
         {
-            AllDates dates = new AllDates();
-            return View(dates);
+            return View();
         }
 
         [HttpPost]
@@ -35,9 +38,13 @@ namespace TrackMyHabit.Controllers
         {
             if (ModelState.IsValid)
             {
-                _context.AllDates.Add(dates);
-                _context.SaveChanges();
-                return Redirect("/AllDates");
+                    _context.AllDates.Add(dates);
+                    _context.SaveChanges();
+                    return Redirect("/AllDates");
+            }
+            else
+            {
+              ViewBag.ErrorMessage = "This date has already been added.";
             }
             return View("Add", dates);
         }

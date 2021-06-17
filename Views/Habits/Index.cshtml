@@ -4,55 +4,54 @@
     ViewData["Title"] = "Index";
 }
 
-<h1>Index</h1>
-
-<p>
-    <a asp-action="Create" class="nav-item px-2">Create New Habit</a>
-    <a asp-controller="AllDates" asp-action="Add" class="nav-item px-2">Add New Date</a>
-    <a asp-controller="AllDates" asp-action="Index" class="nav-item px-2">View List of Dates</a>
-</p>
-
-<form asp-action="Index" method="get">
-    <div class="form-actions no-color">
-        <p>Find a habit:<input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
-        <input type="submit" value="Search" class="btn btn-default" />
-        <a asp-action="Index">Back to full list</a>
-        </p>
+<div class="row">
+    <div class="col-md-6 offset-md-3">
+        <h1 style="font-family:'Open Sans', sans-serif">My list of habits</h1>
+        <div>
+            <form asp-action="Index" method="get">
+                <div class="form-actions no-color">
+                    <p>
+                        Find a habit: <input type="text" name="SearchString" value="@ViewData["CurrentFilter"]" />
+                        <input type="submit" value="Search" class="btn btn-primary" />
+                        <a asp-action="Index">Back to full list</a>
+                    </p>
+                    <h5>
+                        <a asp-action="Create">Create new habit</a>
+                    </h5>
+                </div>
+            </form>
+        </div>
+        <div class="table-responsive">
+            <table class="table table-responsive-lg ">
+                <thead>
+                    <tr style="font-family:'Lato' sans-serif">
+                        <th scope="col">
+                            <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Name)</a>
+                        </th>
+                        <th scope="col">
+                            @Html.DisplayNameFor(model => model.Colour)
+                        </th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var item in Model)
+                    {
+                        <tr style="font-family:'Open Sans', sans-serif">
+                            <th scope="row">
+                                @Html.DisplayFor(modelItem => item.Name)
+                            </th>
+                            <td style="background-color:@item.Colour">
+                            </td>
+                            <td>
+                                <a asp-controller="AllDates" asp-action="AddHabit" asp-route-id="@item.ID" class="nav-item px-2">Add Date</a>
+                                <a asp-action="Edit" asp-route-id="@item.ID" class="nav-item px-2">Edit</a>
+                                <a asp-action="Details" asp-route-id="@item.ID" class="nav-item px-2">Details</a>
+                                <a asp-action="Delete" asp-route-id="@item.ID" class="nav-item px-2">Delete</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
     </div>
-</form>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                <a asp-action="Index" asp-route-sortOrder="@ViewData["NameSortParm"]">@Html.DisplayNameFor(model => model.Name)</a>
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.HabitInitial)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Colour)
-            </th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.HabitInitial)
-            </td>
-            <td style="background-color:@item.Colour">
-                @Html.DisplayFor(modelItem => item.Colour)
-            </td>
-            <td>
-                <a asp-controller="AllDates" asp-action="AddHabit" asp-route-id="@item.ID" class="nav-item px-2">Add Date</a>
-                <a asp-action="Edit" asp-route-id="@item.ID" class="nav-item px-2">Edit</a>
-                <a asp-action="Details" asp-route-id="@item.ID" class="nav-item px-2">Details</a>
-                <a asp-action="Delete" asp-route-id="@item.ID" class="nav-item px-2">Delete</a>
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+</div>
