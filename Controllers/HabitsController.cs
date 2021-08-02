@@ -15,9 +15,9 @@ namespace TrackMyHabit.Controllers
     //[Authorize]
     public class HabitsController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly TrackMyHabitContext _context;
 
-        public HabitsController(ApplicationDbContext context)
+        public HabitsController(TrackMyHabitContext context)
         {
             _context = context;
         }

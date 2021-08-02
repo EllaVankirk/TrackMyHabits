@@ -3,21 +3,19 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using TrackMyHabit.Data;
 
 namespace TrackMyHabit.Migrations
 {
-    [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20210614192813_InitialMigration")]
-    partial class InitialMigration
+    [DbContext(typeof(TrackMyHabitContext))]
+    partial class TrackMyHabitContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.13")
+                .HasAnnotation("ProductVersion", "3.1.16")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -84,6 +82,10 @@ namespace TrackMyHabit.Migrations
                         .IsConcurrencyToken()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(256)")
                         .HasMaxLength(256);
@@ -135,6 +137,8 @@ namespace TrackMyHabit.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("IdentityUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityUserClaim<string>", b =>
@@ -231,6 +235,9 @@ namespace TrackMyHabit.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<string>("ErrorMessage")
+                        .HasColumnType("nvarchar(max)");
+
                     b.HasKey("ID");
 
                     b.ToTable("AllDates");
@@ -244,13 +251,13 @@ namespace TrackMyHabit.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<string>("Colour")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("HabitInitial")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
+                        .IsRequired()
+                        .HasColumnType("nvarchar(20)")
+                        .HasMaxLength(20);
 
                     b.HasKey("ID");
 
@@ -270,6 +277,22 @@ namespace TrackMyHabit.Migrations
                     b.HasIndex("HabitsID");
 
                     b.ToTable("HabitsDates");
+                });
+
+            modelBuilder.Entity("TrackMyHabit.Models.HabitUser", b =>
+                {
+                    b.HasBaseType("Microsoft.AspNetCore.Identity.IdentityUser");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("HabitUserID")
+                        .HasColumnType("int");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasDiscriminator().HasValue("HabitUser");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -326,13 +349,13 @@ namespace TrackMyHabit.Migrations
             modelBuilder.Entity("TrackMyHabit.Models.HabitsDates", b =>
                 {
                     b.HasOne("TrackMyHabit.Models.AllDates", "AllDates")
-                        .WithMany()
+                        .WithMany("HabitDates")
                         .HasForeignKey("AllDatesID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.HasOne("TrackMyHabit.Models.Habits", "Habit")
-                        .WithMany()
+                        .WithMany("HabitDates")
                         .HasForeignKey("HabitsID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();

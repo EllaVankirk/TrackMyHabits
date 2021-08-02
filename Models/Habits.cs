@@ -16,6 +16,7 @@ namespace TrackMyHabit.Models
         public string Name { get; set; }
         [Required]
         public string Colour { get; set; }
+        public IList<HabitsDates> HabitDates { get; set; }
 
 
         public Habits(string name, string colour, string habitInitial)

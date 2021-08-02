@@ -9,15 +9,16 @@ using Microsoft.EntityFrameworkCore;
 using TrackMyHabit.Data;
 using TrackMyHabit.Models;
 using TrackMyHabit.Models.HabitsViewModels;
+using TrackMyHabit.Areas.Identity;
 
 namespace TrackMyHabit.Controllers
 {
     //[Authorize]
     public class AllDatesController : Controller
     {
-        private readonly ApplicationDbContext _context;
+        private readonly TrackMyHabitContext _context;
 
-        public AllDatesController(ApplicationDbContext context)
+        public AllDatesController(TrackMyHabitContext context)
         {
             _context = context;
         }

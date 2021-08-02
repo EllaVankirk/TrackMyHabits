@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TrackMyHabit.Data;
+using TrackMyHabit.Areas.Identity;
 
 namespace TrackMyHabit
 {
@@ -28,8 +29,8 @@ namespace TrackMyHabit
         {
             services.AddControllersWithViews();
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-        options.UseSqlServer(Configuration.GetConnectionString("ApplicationDbContext")));
+            services.AddDbContext<TrackMyHabitContext>(options =>
+        options.UseSqlServer(Configuration.GetConnectionString("TrackMyHabitContextConnection")));
             services.AddRazorPages();
 
             services.Configure<IdentityOptions>(options =>

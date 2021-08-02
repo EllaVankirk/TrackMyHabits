@@ -16,7 +16,7 @@ namespace TrackMyHabit.Areas.Identity
         {
             builder.ConfigureServices((context, services) => {
                 services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                 .AddEntityFrameworkStores<ApplicationDbContext>();
+                 .AddEntityFrameworkStores<TrackMyHabitContext>();
             });
         }
     }

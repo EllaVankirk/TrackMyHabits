@@ -13,6 +13,7 @@ namespace TrackMyHabit.Models
         [Required]
 
         public DateTime Date { get; set; }
+        public IList<HabitsDates> HabitDates { get; set; }
 
         public string ErrorMessage { get; set; }
 

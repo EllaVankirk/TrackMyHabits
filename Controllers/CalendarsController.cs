@@ -14,9 +14,9 @@ namespace TrackMyHabit.Controllers
     //[Authorize]
     public class CalendarsController : Controller
     {
-        private ApplicationDbContext context;
+        private TrackMyHabitContext context;
 
-        public CalendarsController(ApplicationDbContext dbContext)
+        public CalendarsController(TrackMyHabitContext dbContext)
         {
             context = dbContext;
         }

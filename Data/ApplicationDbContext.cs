@@ -9,9 +9,9 @@ using TrackMyHabit.Models;
 
 namespace TrackMyHabit.Data
 {
-    public class ApplicationDbContext : IdentityDbContext<IdentityUser>
+    public class ApplicationDbContext : IdentityDbContext
     {
-        public ApplicationDbContext (DbContextOptions<ApplicationDbContext> options) : base(options)
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
         }
         public DbSet<Habits> Habits { get; set; }
@@ -20,9 +20,9 @@ namespace TrackMyHabit.Data
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<HabitsDates>()
-                .HasKey(hd => new { hd.AllDatesID, hd.HabitsID });
             base.OnModelCreating(modelBuilder);
+            //modelBuilder.Entity<HabitUser>();
+            modelBuilder.Entity<HabitsDates>().HasKey(hd => new { hd.AllDatesID, hd.HabitsID });
         }
 
     }
