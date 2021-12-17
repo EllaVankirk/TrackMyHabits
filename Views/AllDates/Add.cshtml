@@ -7,7 +7,7 @@
         <form asp-controller="AllDates" asp-action="Add" method="post">
             <div class="form-group">
                 <label asp-for="Date"></label>
-                <input asp-for="Date" value="DateTime.Now" />
+                <input asp-for="Date" value="" />
                 <span asp-validation-for="Date"></span>
             </div>
             <input type="submit" value="Add Date" />

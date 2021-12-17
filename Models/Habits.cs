@@ -17,8 +17,7 @@ namespace TrackMyHabit.Models
         [Required]
         public string Colour { get; set; }
 
-
-        public Habits(string name, string colour, string habitInitial)
+        public Habits(string name, string colour)
         {
             Name = name;
             Colour = colour;

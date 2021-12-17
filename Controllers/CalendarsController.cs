@@ -22,8 +22,13 @@ namespace TrackMyHabit.Controllers
         }
         public IActionResult Index()
         {
+            //creates a new calendar to display
             Calendars calendars = new Calendars(DateTime.Now);
+
+            //retrieves all the habits and their dates
             List<HabitsDates> habitDates = context.HabitsDates.Where(o => o.AllDates.Date.Month == calendars.Month).Include(h => h.Habit).ToList();
+
+            //Not sure what this does, but something breaks if I remove it.
             var allDates = context.AllDates.ToList();
 
             DisplayHabitsOnCalendarViewModel viewModel = new DisplayHabitsOnCalendarViewModel(calendars, habitDates);

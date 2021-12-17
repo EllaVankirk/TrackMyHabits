@@ -2,15 +2,15 @@
 
 <div class="row">
     <div class="col-md-3 offset-3">
-        <h1>Add Date to Habit: @Model.Habit.Name</h1>
+        <h1>Add Date to Habit: @Model.Habits.Name</h1>
         <hr />
         <a asp-controller="Habits" asp-action="Index">Back to List</a>
         <form asp-controller="AllDates" asp-action="AddHabit" method="post">
-            <input type="hidden" value="@Model.Habit.ID" name="HabitID" />
+            <input type="hidden" value="@Model.Habits.ID" name="HabitID" />
             <div class="form-group">
-                <label asp-for="AllDatesID">Date</label>
-                <select asp-for="AllDatesID" asp-items="Model.Dates"></select>
-                <span asp-validation-for="AllDatesID"></span>
+                <label asp-for="@Model.AllDates"></label>
+                <input asp-for="@Model.AllDates" value="DateTime.Now" />
+                <span asp-validation-for="@Model.AllDates.Date"></span>
             </div>
             <input type="submit" value="Add Date" />
         </form>

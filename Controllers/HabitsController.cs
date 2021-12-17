@@ -87,7 +87,7 @@ namespace TrackMyHabit.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("ID,Name,Colour,HabitInitial")] Habits habits)
+        public async Task<IActionResult> Create([Bind("ID,Name,Colour")] Habits habits)
         {
             if (ModelState.IsValid)
             {
@@ -120,7 +120,7 @@ namespace TrackMyHabit.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Colour,HabitInitial")] Habits habits)
+        public async Task<IActionResult> Edit(int id, [Bind("ID,Name,Colour ")] Habits habits)
         {
             if (id != habits.ID)
             {
