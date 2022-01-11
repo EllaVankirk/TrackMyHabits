@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TrackMyHabit.Data;
+using TrackMyHabit.Data.Services;
 
 namespace TrackMyHabit
 {
@@ -26,12 +27,19 @@ namespace TrackMyHabit
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
             services.AddControllersWithViews();
 
+            //DbContext Configuration
             services.AddDbContext<ApplicationDbContext>(options =>
         options.UseSqlServer(Configuration.GetConnectionString("ApplicationDbContext")));
+
+            //Services configuration
+            services.AddScoped<IHabitsService, HabitsService>();
+
             services.AddRazorPages();
 
+            //Identity Configuration
             services.Configure<IdentityOptions>(options =>
             {
                  options.Password.RequiredLength = 6;

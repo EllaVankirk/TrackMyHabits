@@ -7,10 +7,10 @@ namespace TrackMyHabit.Models
 {
     public class HabitsDates
     {
-        public int HabitsID { get; set; }
+        public int HabitsId { get; set; }
         public Habits Habit { get; set; }
 
-        public int AllDatesID { get; set; }
+        public int AllDatesId { get; set; }
         public AllDates AllDates { get; set; }
 
         public HabitsDates() { }

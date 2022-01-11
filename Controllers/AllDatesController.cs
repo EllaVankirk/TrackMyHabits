@@ -58,24 +58,26 @@ namespace TrackMyHabit.Controllers
         [HttpPost]
         public IActionResult AddHabit(AddHabitsDatesViewModel viewModel)
         {
-            //    //TODO: Check if a date exists in database
-            //    //If it exists, assign it to the habit in question
-            //    //If it doesnt, add it to database then assign it to habit
-            //    int habitId = viewModel.HabitID;
+           if (ModelState.IsValid)
+            {
+                int habitID = viewModel.Habits.Id;
+                var date = viewModel.AllDates.Date;
 
-            //    var dates = _context.AllDates;
-            //    foreach (var day in dates)
-            //    {
-            //        if (day.Date.ToLongDateString() != viewModel.Date.ToLongDateString())
-            //        {
-            //            _context.AllDates.Date.Add(dates);
-            //            _context.SaveChanges();
-            //        }
-            //        else
-            //        {
-            //            //create it
-            //        }
-            //    }
+                //All of the dates.
+                var existingDates = _context.AllDates;
+
+                //Loop through the dates, and if there is no match, add it to the DB.
+                foreach (var day in existingDates)
+                {
+                    if (viewModel.AllDates.Date.ToLongDateString() != day.Date.ToLongDateString())
+                    {
+                        _context.AllDates.Add(viewModel.AllDates);
+                    }
+
+                     //then what?
+                }
+                return Redirect("/Habits/Details/" + habitID);
+            }
 
             //    //if (ModelState.IsValid)
             //    //{
@@ -113,7 +115,7 @@ namespace TrackMyHabit.Controllers
                 return NotFound();
             }
             var dates = await _context.AllDates
-                .FirstOrDefaultAsync(d => d.ID == id);
+                .FirstOrDefaultAsync(d => d.Id == id);
             if (dates == null)
             {
                 return NotFound();
@@ -133,7 +135,7 @@ namespace TrackMyHabit.Controllers
 
         private bool DatesExists(int id)
         {
-            return _context.AllDates.Any(e => e.ID == id);
+            return _context.AllDates.Any(e => e.Id == id);
         }
     }
 }

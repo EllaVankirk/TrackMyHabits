@@ -8,7 +8,7 @@ namespace TrackMyHabit.Models.HabitsViewModels
 {
     public class HabitDetailsViewModel
     {
-        public int HabitID { get; set; }
+        public int HabitId { get; set; }
         public string Name { get; set; }
         public string Colour { get; set; }
         public string HabitInitial { get; set; }
@@ -19,7 +19,7 @@ namespace TrackMyHabit.Models.HabitsViewModels
 
         public HabitDetailsViewModel(Habits theHabit, List<HabitsDates> habitDates)
         {
-            HabitID = theHabit.ID;
+            HabitId = theHabit.Id;
             Name = theHabit.Name;
             Colour = theHabit.Colour;
 
