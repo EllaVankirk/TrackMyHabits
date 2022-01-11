@@ -55,28 +55,15 @@ namespace TrackMyHabit.Controllers
 
         // GET: Habits/Details/5
         //TODO: Implement
-        public async Task<IActionResult> Details(int? id)
+        public async Task<IActionResult> Details(int id)
         {
-
-            if (id == null)
+            var habitsDetails = await _service.GetHabitByIdAsync(id);
+            if (habitsDetails == null)
             {
                 return NotFound();
             }
 
-            List<HabitsDates> habitsDates = _context.HabitsDates
-                .Where(hd => hd.HabitsID == id)
-                .Include(hd => hd.AllDates)
-                .ToList();
-
-            var habits = await _context.Habits
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (habits == null)
-            {
-                return NotFound();
-            }
-
-            HabitDetailsViewModel viewModel = new HabitDetailsViewModel(habits, habitsDates);
-            return View(viewModel);
+            return View(habitsDetails);
         }
 
         // GET: Habits/Create
@@ -85,32 +72,27 @@ namespace TrackMyHabit.Controllers
             return View();
         }
 
+
+        //FIXME
         // POST: Habits/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Name,Colour")] Habits habits)
-        {
-            if (ModelState.IsValid)
-            {
-                _context.Add(habits);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(habits);
-        }
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create([Bind("Id,Name,Colour")] Habits habits)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        _context.Add(habits);
+        //        await _context.SaveChangesAsync();
+        //        return RedirectToAction(nameof(Index));
+        //    }
+        //    return View(habits);
+        //}
 
         // GET: Habits/Edit/5
         [HttpGet]
-        public async Task<IActionResult> Edit(int? id)
+        public async Task<IActionResult> Edit(int id)
         {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var habits = await _context.Habits.FindAsync(id);
+            var habits = await _service.GetHabitByIdAsync(id);
             if (habits == null)
             {
                 return NotFound();
@@ -123,52 +105,26 @@ namespace TrackMyHabit.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Name,Colour ")] Habits habits)
+        public async Task<IActionResult> EditAsync(int id, [Bind("Id,Name,Colour ")] Habits habits)
         {
-            if (id != habits.Id)
+            if (!ModelState.IsValid)
             {
-                return NotFound();
+                return View(habits);
             }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(habits);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!HabitsExists(habits.Id))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction("Index");
-            }
+            await _service.UpdateAsync(id, habits);
             return View("Index", habits);
         }
 
         // GET: Habits/Delete/5
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> DeleteAsync(int id)
         {
-            if (id == null)
+            var habitDetails = await _service.GetHabitByIdAsync(id);
+            if (!ModelState.IsValid)
             {
                 return NotFound();
             }
 
-            var habits = await _context.Habits
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (habits == null)
-            {
-                return NotFound();
-            }
-
-            return View(habits);
+            return View(habitDetails);
         }
 
         // POST: Habits/Delete/5
@@ -176,15 +132,18 @@ namespace TrackMyHabit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var habits = await _context.Habits.FindAsync(id);
-            _context.Habits.Remove(habits);
-            await _context.SaveChangesAsync();
+            var habitDetails = await _service.GetHabitByIdAsync(id);
+            if (habitDetails == null)
+            {
+                return NotFound();
+            }
+            await _service.DeleteAsync(id);
             return RedirectToAction(nameof(Index));
         }
 
-        private bool HabitsExists(int id)
-        {
-            return _context.Habits.Any(e => e.Id == id);
-        }
+        //private bool HabitsExists(int id)
+        //{
+        //    return _context.Habits.Any(e => e.Id == id);
+        //}
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,6 +11,18 @@ namespace TrackMyHabit.Data.Services
 {
     public class HabitsService : EntityBaseRepository<Habits>, IHabitsService
     {
-        public HabitsService(ApplicationDbContext context): base(context) { }
+        private readonly ApplicationDbContext _context;
+        public HabitsService(ApplicationDbContext context): base(context)
+        {
+            _context = context;
+        }
+
+        public async Task<Habits> GetHabitByIdAsync(int id)
+        {
+            var habitsDetails = _context.Habits.Include(d => d.AllDates).FirstOrDefaultAsync(h => h.Id == id);
+            return await habitsDetails;
+        }
+
+
     }
 }

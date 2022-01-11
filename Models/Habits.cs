@@ -20,6 +20,9 @@ namespace TrackMyHabit.Models
 
         public List<HabitsDates> HabitsDates { get; set; }
 
+        public int DatesId { get; set; }
+        public AllDates AllDates { get; set; }
+
         public Habits(string name, string colour)
         {
             Name = name;

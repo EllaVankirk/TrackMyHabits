@@ -16,7 +16,7 @@
                 @foreach (var date in Model)
                 {
                     <ul>
-                        <li style="list-style:none; line-height:200%">@date.Date.ToString("MM/dd/yyyy") <a asp-action="Delete" asp-route-id="@date.ID">Delete</a></li>
+                        <li style="list-style:none; line-height:200%">@date.Date.ToString("MM/dd/yyyy") <a asp-action="Delete" asp-route-id="@date.Id">Delete</a></li>
                     </ul>
                 }
             }
