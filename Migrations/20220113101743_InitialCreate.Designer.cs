@@ -10,7 +10,7 @@ using TrackMyHabit.Data;
 namespace TrackMyHabit.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220111160014_InitialCreate")]
+    [Migration("20220113101743_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -231,7 +231,12 @@ namespace TrackMyHabit.Migrations
                     b.Property<DateTime>("Date")
                         .HasColumnType("datetime2");
 
+                    b.Property<int?>("HabitsId")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("HabitsId");
 
                     b.ToTable("AllDates");
                 });
@@ -243,15 +248,12 @@ namespace TrackMyHabit.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("AllDatesId")
+                    b.Property<int>("AllDatesId")
                         .HasColumnType("int");
 
                     b.Property<string>("Colour")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("DatesId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -259,8 +261,6 @@ namespace TrackMyHabit.Migrations
                         .HasMaxLength(20);
 
                     b.HasKey("Id");
-
-                    b.HasIndex("AllDatesId");
 
                     b.ToTable("Habits");
                 });
@@ -331,11 +331,11 @@ namespace TrackMyHabit.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("TrackMyHabit.Models.Habits", b =>
+            modelBuilder.Entity("TrackMyHabit.Models.AllDates", b =>
                 {
-                    b.HasOne("TrackMyHabit.Models.AllDates", "AllDates")
-                        .WithMany()
-                        .HasForeignKey("AllDatesId");
+                    b.HasOne("TrackMyHabit.Models.Habits", null)
+                        .WithMany("AllDates")
+                        .HasForeignKey("HabitsId");
                 });
 
             modelBuilder.Entity("TrackMyHabit.Models.HabitsDates", b =>

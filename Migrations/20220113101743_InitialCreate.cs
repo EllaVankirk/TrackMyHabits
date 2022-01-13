@@ -8,19 +8,6 @@ namespace TrackMyHabit.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "AllDates",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Date = table.Column<DateTime>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_AllDates", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "AspNetRoles",
                 columns: table => new
                 {
@@ -67,18 +54,11 @@ namespace TrackMyHabit.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(maxLength: 20, nullable: false),
                     Colour = table.Column<string>(nullable: false),
-                    DatesId = table.Column<int>(nullable: false),
-                    AllDatesId = table.Column<int>(nullable: true)
+                    AllDatesId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Habits", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Habits_AllDates_AllDatesId",
-                        column: x => x.AllDatesId,
-                        principalTable: "AllDates",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -188,6 +168,26 @@ namespace TrackMyHabit.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "AllDates",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Date = table.Column<DateTime>(nullable: false),
+                    HabitsId = table.Column<int>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AllDates", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AllDates_Habits_HabitsId",
+                        column: x => x.HabitsId,
+                        principalTable: "Habits",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "HabitsDates",
                 columns: table => new
                 {
@@ -210,6 +210,11 @@ namespace TrackMyHabit.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AllDates_HabitsId",
+                table: "AllDates",
+                column: "HabitsId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_AspNetRoleClaims_RoleId",
@@ -251,11 +256,6 @@ namespace TrackMyHabit.Migrations
                 filter: "[NormalizedUserName] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Habits_AllDatesId",
-                table: "Habits",
-                column: "AllDatesId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_HabitsDates_HabitsId",
                 table: "HabitsDates",
                 column: "HabitsId");
@@ -288,10 +288,10 @@ namespace TrackMyHabit.Migrations
                 name: "AspNetUsers");
 
             migrationBuilder.DropTable(
-                name: "Habits");
+                name: "AllDates");
 
             migrationBuilder.DropTable(
-                name: "AllDates");
+                name: "Habits");
         }
     }
 }

@@ -22,17 +22,6 @@ namespace TrackMyHabit.Data.Services
         {
             var allDates = _context.AllDates.ToList();
 
-            //Create new habit.
-            var newHabit = new Habits
-            {
-                Name = habits.HabitName,
-                Colour = habits.HabitColor,
-            };
-
-            _context.Habits.Add(newHabit);
-            _context.SaveChanges();
-
-
             //Create new date
             var newDate = new AllDates
             {
@@ -41,6 +30,19 @@ namespace TrackMyHabit.Data.Services
 
             _context.AllDates.Add(newDate);
             _context.SaveChanges();
+
+            //Create new habit.
+            var newHabit = new Habits
+            {
+                Name = habits.HabitName,
+                Colour = habits.HabitColor,
+                AllDatesId = newDate.Id,
+
+            };
+
+            _context.Habits.Add(newHabit);
+            _context.SaveChanges();
+
 
             var habitsDates = new HabitsDates
             {
@@ -51,39 +53,15 @@ namespace TrackMyHabit.Data.Services
             _context.HabitsDates.Add(habitsDates);
 
             _context.SaveChanges();
-            //Check for existing date
-            //foreach (var date in allDates)
-            //{
-            //    if (newDate.Date.ToLongDateString() == date.Date.ToLongDateString())
-            //    {
-            //        //If they match, then what?
-            //        var habitsDates = new HabitsDates
-            //        {
-            //            HabitsId = newHabit.Id,
-            //            AllDatesId = date.Id,
-            //        };
-            //        _context.HabitsDates.Add(habitsDates);
-            //        _context.SaveChanges();
-            //    }
-            //    else
-            //    {
-            //        _context.AllDates.Add(newDate);
-            //        var habitsDates = new HabitsDates
-            //        {
-            //            HabitsId = newHabit.Id,
-            //            AllDatesId = newDate.Id
-            //        };
-            //        _context.HabitsDates.Add(habitsDates);
-            //        _context.SaveChanges();
-            //    }
-            //}
-            //_context.SaveChanges();
+
         }
 
         public async Task<Habits> GetHabitByIdAsync(int id)
         {
-            var habitsDetails = _context.Habits.Include(d => d.AllDates).FirstOrDefaultAsync(h => h.Id == id);
-            return await habitsDetails;
+            var habitDetails = _context.Habits.Include(hd => hd.HabitsDates)
+                .ThenInclude(a => a.AllDates)
+                .FirstOrDefaultAsync(h => h.Id == id);
+            return await habitDetails;
         }
 
 

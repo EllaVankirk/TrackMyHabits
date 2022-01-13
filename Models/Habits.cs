@@ -20,8 +20,8 @@ namespace TrackMyHabit.Models
 
         public List<HabitsDates> HabitsDates { get; set; }
 
-        public int DatesId { get; set; }
-        public AllDates AllDates { get; set; }
+        public int AllDatesId { get; set; }
+        public List<AllDates> AllDates { get; set; }
 
         public Habits(string name, string colour)
         {

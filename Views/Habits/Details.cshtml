@@ -18,14 +18,7 @@
             @Html.DisplayNameFor(model => model.AllDates)
         </dt>
         <dd class="col-sm-10">
-            @if (Model.AllDates == null)
-            {
-                <a asp-controller="AllDates" asp-action="Add">Click here to create a date</a>
-            }
-            else
-            {
-                @Html.DisplayFor(model => Model.AllDates.Date.ToLongDateString())
-            }
+                @Html.DisplayFor(model => Model.AllDates)
         </dd>
         <dt class="col-sm-2">
             @Html.DisplayNameFor(model => model.Colour)
