@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using TrackMyHabit.Data;
@@ -58,57 +59,57 @@ namespace TrackMyHabit.Controllers
         [HttpPost]
         public IActionResult AddHabit(AddHabitsDatesViewModel viewModel)
         {
-           if (ModelState.IsValid)
+            //if (ModelState.IsValid)
+            // {
+            //     int habitID = viewModel.Habits.Id;
+            //     var date = viewModel.AllDates.Date;
+
+            //     //All of the dates.
+            //     var existingDates = _context.AllDates;
+
+            //     //Loop through the dates, and if there is no match, add it to the DB.
+            //     foreach (var day in existingDates)
+            //     {
+            //         if (viewModel.AllDates.Date.ToLongDateString() != day.Date.ToLongDateString())
+            //         {
+            //             _context.AllDates.Add(viewModel.AllDates);
+            //         }
+
+            //          //then what?
+            //     }
+            //     return Redirect("/Habits/Details/" + habitID);
+            // }
+
+            if (ModelState.IsValid)
             {
+                //sets a variable to be the ID of each thing.
                 int habitID = viewModel.Habits.Id;
-                var date = viewModel.AllDates.Date;
+                int dateID = viewModel.AllDates.Id;
 
-                //All of the dates.
-                var existingDates = _context.AllDates;
+                //uses the variables above to create a list of items that are already in the database using the current habitID and dateID
+                List<HabitsDates> existingItems = _context.HabitsDates
+                    .Where(hd => hd.HabitsId == habitID)
+                    .Where(hd => hd.AllDatesId == dateID)
+                    .ToList();
 
-                //Loop through the dates, and if there is no match, add it to the DB.
-                foreach (var day in existingDates)
+                //if there isn't anything in the list of existingItems, then add it. If there is something, nothing happens.
+                if (existingItems.Count == 0)
                 {
-                    if (viewModel.AllDates.Date.ToLongDateString() != day.Date.ToLongDateString())
+                    HabitsDates habitsDates = new HabitsDates
                     {
-                        _context.AllDates.Add(viewModel.AllDates);
-                    }
+                        HabitsId = habitID,
+                        AllDatesId = dateID
+                    };
 
-                     //then what?
+                    _context.HabitsDates.Add(habitsDates);
+                    _context.SaveChanges();
                 }
                 return Redirect("/Habits/Details/" + habitID);
             }
-
-            //    //if (ModelState.IsValid)
-            //    //{
-            //    //    //sets a variable to be the ID of each thing.
-            //    //    int habitID = viewModel.HabitID;
-            //    //    int dateID = viewModel.AllDatesID;
-
-            //    //    //uses the variables above to create a list of items that are already in the database using the current habitID and dateID
-            //    //    List<HabitsDates> existingItems = _context.HabitsDates
-            //    //        .Where(hd => hd.HabitsID == habitID)
-            //    //        .Where(hd => hd.AllDatesID == dateID)
-            //    //        .ToList();
-
-            //    //    //if there isn't anything in the list of existingItems, then add it. If there is something, nothing happens.
-            //    //    if (existingItems.Count == 0)
-            //    //    {
-            //    //        HabitsDates habitsDates = new HabitsDates
-            //    //        {
-            //    //            HabitsID = habitID,
-            //    //            AllDatesID = dateID
-            //    //        };
-
-            //    //        _context.HabitsDates.Add(habitsDates);
-            //    //        _context.SaveChanges();
-            //    //    }
-            //    //    return Redirect("/Habits/Details/" + habitID);
-            //    //}
             return View(viewModel);
-    }
+        }
 
-    public async Task<IActionResult> Delete(int? id)
+        public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
             {

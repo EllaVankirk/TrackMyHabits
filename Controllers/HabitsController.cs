@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
 using TrackMyHabit.Data;
 using TrackMyHabit.Data.Services;
 using TrackMyHabit.Models;
@@ -22,7 +18,6 @@ namespace TrackMyHabit.Controllers
         {
             _service = service;
         }
-
 
         //GET: Habits
         //Index Sort and Search method
@@ -75,18 +70,13 @@ namespace TrackMyHabit.Controllers
 
         //FIXME
         // POST: Habits/Create
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create([Bind("Id,Name,Colour")] Habits habits)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        _context.Add(habits);
-        //        await _context.SaveChangesAsync();
-        //        return RedirectToAction(nameof(Index));
-        //    }
-        //    return View(habits);
-        //}
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create(CreateHabitWithDateViewModel habits)
+        {
+            await _service.CreateHabitAsync(habits);
+            return View(habits);
+        }
 
         // GET: Habits/Edit/5
         [HttpGet]
@@ -101,8 +91,6 @@ namespace TrackMyHabit.Controllers
         }
 
         // POST: Habits/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to, for
-        // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAsync(int id, [Bind("Id,Name,Colour ")] Habits habits)
