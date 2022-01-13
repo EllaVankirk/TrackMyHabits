@@ -32,8 +32,6 @@ namespace TrackMyHabit.Data.Services
             _context.Habits.Add(newHabit);
             _context.SaveChanges();
 
-            var newHabitId = newHabit.Id;
-
 
             //Create new date
             var newDate = new AllDates
@@ -43,8 +41,6 @@ namespace TrackMyHabit.Data.Services
 
             _context.AllDates.Add(newDate);
             _context.SaveChanges();
-
-            var newDateId = newDate.Id;
 
             var habitsDates = new HabitsDates
             {
