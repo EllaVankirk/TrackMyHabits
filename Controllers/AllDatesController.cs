@@ -22,7 +22,7 @@ namespace TrackMyHabit.Controllers
         public async Task<IActionResult> Index()
         {
             var allDates = from ad in _context.AllDates
-                           select ad;
+                select ad;
             return View(await allDates.AsNoTracking().ToListAsync());
         }
 

@@ -1,41 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Threading.Tasks;
+﻿//using System;
+//using System.Collections.Generic;
+//using System.ComponentModel;
+//using System.Linq;
+//using System.Threading.Tasks;
 
-namespace TrackMyHabit.Models.HabitsViewModels
-{
-    public class HabitDetailsViewModel
-    {
-        public int HabitId { get; set; }
-        public string Name { get; set; }
-        public string Colour { get; set; }
-        public string HabitInitial { get; set; }
-        [DisplayName("Date")]
-        public string DateText { get; set; }
+//namespace TrackMyHabit.Models.HabitsViewModels
+//{
+//    public class HabitDetailsViewModel
+//    {
+//        public int HabitId { get; set; }
+//        public string Name { get; set; }
+//        public string Colour { get; set; }
+//        public string HabitInitial { get; set; }
+//        [DisplayName("Date")]
+//        public string DateText { get; set; }
 
-        public HabitDetailsViewModel() { }
+//        public HabitDetailsViewModel() { }
 
-        public HabitDetailsViewModel(Habits theHabit, List<HabitsDates> habitDates)
-        {
-            HabitId = theHabit.Id;
-            Name = theHabit.Name;
-            Colour = theHabit.Colour;
+//        public HabitDetailsViewModel(Habits theHabit, List<HabitsDates> habitDates)
+//        {
+//            HabitId = theHabit.Id;
+//            Name = theHabit.Name;
+//            Colour = theHabit.Colour;
 
-            DateText = "";
+//            DateText = "";
 
-            //for every item in habitDates, add them all to the string called DateText
-            for(var i = 0; i < habitDates.Count; i++)
-            {
-                DateText += habitDates[i].AllDates.Date.ToString("MM/d/yyyy");
+//            //for every item in habitDates, add them all to the string called DateText
+//            for(var i = 0; i < habitDates.Count; i++)
+//            {
+//                DateText += habitDates[i].AllDates.Date.ToString("MM/d/yyyy");
 
-                if (i < habitDates.Count - 1)
-                {
-                    DateText += ", ";
-                }
-            }
-        }
+//                if (i < habitDates.Count - 1)
+//                {
+//                    DateText += ", ";
+//                }
+//            }
+//        }
 
-    }
-}
+//    }
+//}

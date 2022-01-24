@@ -56,6 +56,7 @@ namespace TrackMyHabit.Data.Services
 
         }
 
+
         public async Task<Habits> GetHabitByIdAsync(int id)
         {
             var habitDetails = _context.Habits.Include(hd => hd.HabitsDates)
@@ -65,6 +66,37 @@ namespace TrackMyHabit.Data.Services
         }
 
 
+        public async Task AddDateToHabit(UpdateHabitWithDateViewModel habit)
+        {
+            //display the habit
+            //pass in a new date
+            //check if it exists
+            //add that id or create a new one
 
+            //retrieves data
+            var habitDetails = _context.Habits.Include(hd => hd.HabitsDates)
+                .ThenInclude(a => a.AllDates)
+                .FirstOrDefaultAsync(h => h.Id == habit.HabitId);
+
+            //Create new date
+            var newDate = new AllDates
+            {
+                Date = habit.HabitDate,
+            };
+
+            _context.AllDates.Add(newDate);
+            _context.SaveChanges();
+
+            var habitsDates = new HabitsDates
+            {
+                HabitsId = habit.HabitId,
+                AllDatesId = newDate.Id,
+            };
+
+            _context.HabitsDates.Add(habitsDates);
+
+            _context.SaveChanges();
+
+        }
     }
 }

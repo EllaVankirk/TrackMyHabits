@@ -82,7 +82,16 @@ namespace TrackMyHabit.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            var habits = await _service.GetHabitByIdAsync(id);
+            //I need to make this a viewmodel
+            var habitsDetails = await _service.GetHabitByIdAsync(id);
+            var habits = new UpdateHabitWithDateViewModel()
+            {
+                HabitId = habitsDetails.Id,
+                HabitName = habitsDetails.Name,
+                HabitColor = habitsDetails.Colour,
+                HabitsDates = habitsDetails.HabitsDates
+            };
+
             if (habits == null)
             {
                 return NotFound();
@@ -93,14 +102,14 @@ namespace TrackMyHabit.Controllers
         // POST: Habits/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditAsync(int id, [Bind("Id,Name,Colour ")] Habits habits)
+        public async Task<IActionResult> Edit(int id, UpdateHabitWithDateViewModel habit)
         {
             if (!ModelState.IsValid)
             {
-                return View(habits);
+                return View(habit);
             }
-            await _service.UpdateAsync(id, habits);
-            return View("Index", habits);
+            await _service.AddDateToHabit(habit);
+            return View("Index", habit);
         }
 
         // GET: Habits/Delete/5

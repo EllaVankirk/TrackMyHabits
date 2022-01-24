@@ -15,12 +15,15 @@ namespace TrackMyHabit.Models
         public int Id { get; set; }
         [Required, StringLength(20)]
         public string Name { get; set; }
+
         [Required]
+        [Display(Name = "Color")]
         public string Colour { get; set; }
 
         public List<HabitsDates> HabitsDates { get; set; }
 
         public int AllDatesId { get; set; }
+        [Display(Name = "Dates")]
         public List<AllDates> AllDates { get; set; }
 
         public Habits(string name, string colour)
