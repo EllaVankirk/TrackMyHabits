@@ -104,12 +104,13 @@ namespace TrackMyHabit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Edit(int id, UpdateHabitWithDateViewModel habit)
         {
+            var listOfHabits = await _service.GetAllAsync();
             if (!ModelState.IsValid)
             {
                 return View(habit);
             }
             await _service.AddDateToHabit(habit);
-            return View("Index", habit);
+            return View("Index", listOfHabits);
         }
 
         // GET: Habits/Delete/5
