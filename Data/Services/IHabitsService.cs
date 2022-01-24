@@ -13,5 +13,6 @@ namespace TrackMyHabit.Data.Services
 
         Task AddDateToHabit(UpdateHabitWithDateViewModel habits);
 
+        Task DeleteEmptyDates();
     }
 }

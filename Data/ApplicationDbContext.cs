@@ -26,10 +26,12 @@ namespace TrackMyHabit.Data
             //Creates the join table.
             modelBuilder.Entity<HabitsDates>()
                 .HasKey(hd => new { hd.AllDatesId, hd.HabitsId });
-            base.OnModelCreating(modelBuilder);
+
 
             modelBuilder.Entity<HabitsDates>().HasOne(h => h.Habit).WithMany(hd => hd.HabitsDates).HasForeignKey(h => h.HabitsId);
             modelBuilder.Entity<HabitsDates>().HasOne(d => d.AllDates).WithMany(hd => hd.HabitsDates).HasForeignKey(d => d.AllDatesId);
+
+            base.OnModelCreating(modelBuilder);
         }
 
     }

@@ -139,6 +139,12 @@ namespace TrackMyHabit.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+        //I don't need a view I don't think, I just need to be able to us this method ?
+        public async void CleanUpDates()
+        {
+            await _service.DeleteEmptyDates();
+        }
+
         //private bool HabitsExists(int id)
         //{
         //    return _context.Habits.Any(e => e.Id == id);

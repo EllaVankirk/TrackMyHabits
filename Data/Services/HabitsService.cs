@@ -13,7 +13,7 @@ namespace TrackMyHabit.Data.Services
     public class HabitsService : EntityBaseRepository<Habits>, IHabitsService
     {
         private readonly ApplicationDbContext _context;
-        public HabitsService(ApplicationDbContext context): base(context)
+        public HabitsService(ApplicationDbContext context) : base(context)
         {
             _context = context;
         }
@@ -68,13 +68,9 @@ namespace TrackMyHabit.Data.Services
 
         public async Task AddDateToHabit(UpdateHabitWithDateViewModel habit)
         {
-            //display the habit
-            //pass in a new date
-            //check if it exists
-            //add that id or create a new one
 
             //retrieves data
-            var habitDetails = _context.Habits.Include(hd => hd.HabitsDates)
+            var habitDetails = await _context.Habits.Include(hd => hd.HabitsDates)
                 .ThenInclude(a => a.AllDates)
                 .FirstOrDefaultAsync(h => h.Id == habit.HabitId);
 
@@ -96,6 +92,25 @@ namespace TrackMyHabit.Data.Services
             _context.HabitsDates.Add(habitsDates);
 
             _context.SaveChanges();
+        }
+
+        public async Task DeleteEmptyDates()
+        {
+            var dates = _context.AllDates.ToList();
+            var habitsDates = _context.HabitsDates.ToList();
+
+            //what do i want to say?
+                //if a dates[i] is NOT inside habitsDates
+                //remove the date from the db
+            foreach (var date in dates)
+            {
+                var dateToRemove = _context.HabitsDates.Find(date.Id);
+                if (dateToRemove == null)
+                {
+                    _context.AllDates.Remove(date);
+                    _context.SaveChanges();
+                }
+            }
 
         }
     }
