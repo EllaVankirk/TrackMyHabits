@@ -10,8 +10,8 @@ using TrackMyHabit.Data;
 namespace TrackMyHabit.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220124195939_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20220125174233_initialcreate")]
+    partial class initialcreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -247,9 +247,6 @@ namespace TrackMyHabit.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("AllDatesId")
-                        .HasColumnType("int");
 
                     b.Property<string>("Colour")
                         .IsRequired()

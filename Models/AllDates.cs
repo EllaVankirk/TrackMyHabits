@@ -18,7 +18,7 @@ namespace TrackMyHabit.Models
 
         public List<HabitsDates> HabitsDates { get; set; }
 
-
+        //public int HabitsId { get; set; }
         //public AllDates (DateTime date)
         //{
         //    Date = date;

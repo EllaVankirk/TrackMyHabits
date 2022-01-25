@@ -36,8 +36,6 @@ namespace TrackMyHabit.Data.Services
             {
                 Name = habits.HabitName,
                 Colour = habits.HabitColor,
-                AllDatesId = newDate.Id,
-
             };
 
             _context.Habits.Add(newHabit);
@@ -96,21 +94,10 @@ namespace TrackMyHabit.Data.Services
 
         public async Task DeleteEmptyDates()
         {
-            var dates = _context.AllDates.ToList();
-            var habitsDates = _context.HabitsDates.ToList();
 
             //what do i want to say?
                 //if a dates[i] is NOT inside habitsDates
                 //remove the date from the db
-            foreach (var date in dates)
-            {
-                var dateToRemove = _context.HabitsDates.Find(date.Id);
-                if (dateToRemove == null)
-                {
-                    _context.AllDates.Remove(date);
-                    _context.SaveChanges();
-                }
-            }
 
         }
     }

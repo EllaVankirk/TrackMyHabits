@@ -14,6 +14,7 @@ namespace TrackMyHabit.Models
     {
         public int Id { get; set; }
 
+
         [Required, StringLength(20)]
         public string Name { get; set; }
 
@@ -23,7 +24,6 @@ namespace TrackMyHabit.Models
 
         public List<HabitsDates> HabitsDates { get; set; }
 
-        public int AllDatesId { get; set; }
 
         [Display(Name = "Dates")]
         public List<AllDates> AllDates { get; set; }
@@ -36,6 +36,7 @@ namespace TrackMyHabit.Models
 
         public Habits() { }
 
+        //Used to check for equality ?
         public override int GetHashCode()
         {
             return HashCode.Combine(Id);
