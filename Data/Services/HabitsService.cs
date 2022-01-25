@@ -20,40 +20,70 @@ namespace TrackMyHabit.Data.Services
 
         public async Task CreateHabitAsync(CreateHabitWithDateViewModel habits)
         {
-            var allDates = await _context.AllDates.ToListAsync();
-
-
-
-            //Create new date
-            var newDate = new AllDates
-            {
-                Date = habits.HabitDate,
-            };
-
-            _context.AllDates.Add(newDate);
-            _context.SaveChanges();
-
             //Create new habit.
             var newHabit = new Habits
             {
                 Name = habits.HabitName,
                 Colour = habits.HabitColor,
             };
-
             await _context.Habits.AddAsync(newHabit);
             _context.SaveChanges();
 
+            var allDates = await _context.AllDates.ToListAsync();
+            var currentHabitDate = habits.HabitDate.ToLongDateString();
 
-            var habitsDates = new HabitsDates
+            if (allDates.Count > 0)
             {
-                HabitsId = newHabit.Id,
-                AllDatesId = newDate.Id,
-            };
+                foreach (var date in allDates)
+                {
+                    //if found add the dateID to make a new habitsdates
+                    if (currentHabitDate == date.Date.ToLongDateString())
+                    {
+                        var habitsDates = new HabitsDates
+                        {
+                            HabitsId = newHabit.Id,
+                            AllDatesId = date.Id
+                        };
+                        _context.HabitsDates.Add(habitsDates);
+                        _context.SaveChanges();
+                    }
+                    //otherwise make a new date and create a new habitsdates
+                    else
+                    {
+                        var newDate = new AllDates
+                        {
+                            Date = habits.HabitDate,
+                        };
+                        _context.AllDates.Add(newDate);
+                        _context.SaveChanges();
 
-            _context.HabitsDates.Add(habitsDates);
+                        var habitsDates = new HabitsDates
+                        {
+                            HabitsId = newHabit.Id,
+                            AllDatesId = newDate.Id,
+                        };
+                        _context.HabitsDates.Add(habitsDates);
+                        _context.SaveChanges();
+                    }
+                }
+            }
+            else //if it is null what do we do ? create a new date and habitdate.
+            {
+                var newDate = new AllDates
+                {
+                    Date = habits.HabitDate,
+                };
+                _context.AllDates.Add(newDate);
+                _context.SaveChanges();
 
-            _context.SaveChanges();
-
+                var habitsDates = new HabitsDates
+                {
+                    HabitsId = newHabit.Id,
+                    AllDatesId = newDate.Id,
+                };
+                _context.HabitsDates.Add(habitsDates);
+                _context.SaveChanges();
+            }
         }
 
 
@@ -98,8 +128,8 @@ namespace TrackMyHabit.Data.Services
         {
 
             //what do i want to say?
-                //if a dates[i] is NOT inside habitsDates
-                //remove the date from the db
+            //if a dates[i] is NOT inside habitsDates
+            //remove the date from the db
 
         }
     }

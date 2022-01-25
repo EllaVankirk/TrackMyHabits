@@ -49,7 +49,7 @@ namespace TrackMyHabit.Controllers
         }
 
         // GET: Habits/Details/5
-        //TODO: Implement
+
         public async Task<IActionResult> Details(int id)
         {
             var habitsDetails = await _service.GetHabitByIdAsync(id);
