@@ -13,6 +13,5 @@ namespace TrackMyHabit.Models
         public int AllDatesId { get; set; }
         public AllDates AllDates { get; set; }
 
-        public HabitsDates() { }
     }
 }

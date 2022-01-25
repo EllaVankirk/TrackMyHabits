@@ -28,18 +28,6 @@ namespace TrackMyHabit.Models
         [Display(Name = "Dates")]
         public List<AllDates> AllDates { get; set; }
 
-        public Habits(string name, string colour)
-        {
-            Name = name;
-            Colour = colour;
-        }
 
-        public Habits() { }
-
-        //Used to check for equality ?
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(Id);
-        }
     }
 }

@@ -20,7 +20,9 @@ namespace TrackMyHabit.Data.Services
 
         public async Task CreateHabitAsync(CreateHabitWithDateViewModel habits)
         {
-            var allDates = _context.AllDates.ToList();
+            var allDates = await _context.AllDates.ToListAsync();
+
+
 
             //Create new date
             var newDate = new AllDates
@@ -38,7 +40,7 @@ namespace TrackMyHabit.Data.Services
                 Colour = habits.HabitColor,
             };
 
-            _context.Habits.Add(newHabit);
+            await _context.Habits.AddAsync(newHabit);
             _context.SaveChanges();
 
 

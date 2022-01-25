@@ -18,16 +18,5 @@ namespace TrackMyHabit.Models
 
         public List<HabitsDates> HabitsDates { get; set; }
 
-        //public int HabitsId { get; set; }
-        //public AllDates (DateTime date)
-        //{
-        //    Date = date;
-        //}
-        //public override string ToString()
-        //{
-        //    return Date.Date.ToString("MM/d/yyyy");
-        //}
-
-        //public AllDates() { }
     }
 }
