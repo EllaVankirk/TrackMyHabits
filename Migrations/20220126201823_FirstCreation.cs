@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace TrackMyHabit.Migrations
 {
-    public partial class initialcreate : Migration
+    public partial class FirstCreation : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

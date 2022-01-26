@@ -32,12 +32,14 @@ namespace TrackMyHabit.Data.Services
             var allDates = await _context.AllDates.ToListAsync();
             var currentHabitDate = habits.HabitDate.ToLongDateString();
 
+            var incrementCounter = 0;
+
             if (allDates.Count > 0)
             {
                 foreach (var date in allDates)
                 {
                     //if found add the dateID to make a new habitsdates
-                    if (currentHabitDate == date.Date.ToLongDateString())
+                    if (currentHabitDate == date.Date.ToLongDateString()) //if true, increment existingDatesCounter, create a new habitsdates, save it and exit the loop.
                     {
                         var habitsDates = new HabitsDates
                         {
@@ -46,25 +48,30 @@ namespace TrackMyHabit.Data.Services
                         };
                         await _context.HabitsDates.AddAsync(habitsDates);
                         await _context.SaveChangesAsync();
+                        break;
                     }
-                    //otherwise make a new date and create a new habitsdates
-                    else
+                    else if (currentHabitDate != date.Date.ToLongDateString())
                     {
-                        var newDate = new AllDates
-                        {
-                            Date = habits.HabitDate,
-                        };
-                        await _context.AllDates.AddAsync(newDate);
-                        await _context.SaveChangesAsync();
-
-                        var habitsDates = new HabitsDates
-                        {
-                            HabitsId = newHabit.Id,
-                            AllDatesId = newDate.Id,
-                        };
-                        await _context.HabitsDates.AddAsync(habitsDates);
-                        await _context.SaveChangesAsync();
+                        incrementCounter++;
+                        continue;
                     }
+                }
+                if (incrementCounter == allDates.Count)
+                {
+                    var newDate = new AllDates
+                    {
+                        Date = habits.HabitDate,
+                    };
+                    await _context.AllDates.AddAsync(newDate);
+                    await _context.SaveChangesAsync();
+
+                    var habitsDates = new HabitsDates
+                    {
+                        HabitsId = newHabit.Id,
+                        AllDatesId = newDate.Id,
+                    };
+                    await _context.HabitsDates.AddAsync(habitsDates);
+                    await _context.SaveChangesAsync();
                 }
             }
             else //if it is less than 1, create a new date and habitdate.
@@ -96,7 +103,7 @@ namespace TrackMyHabit.Data.Services
         }
 
 
-        public async Task AddNewDateToHabitAsync(UpdateHabitWithDateViewModel habit)
+        public async Task AddNewDateToHabitAsync(AddHabitToDateViewModel habit)
         {
             //Create new date
             var newDate = new AllDates
@@ -104,8 +111,8 @@ namespace TrackMyHabit.Data.Services
                 Date = habit.HabitDate,
             };
 
-            _context.AllDates.Add(newDate);
-            _context.SaveChanges();
+            await _context.AllDates.AddAsync(newDate);
+            await _context.SaveChangesAsync();
 
             var habitsDates = new HabitsDates
             {
@@ -113,9 +120,9 @@ namespace TrackMyHabit.Data.Services
                 AllDatesId = newDate.Id,
             };
 
-            _context.HabitsDates.Add(habitsDates);
+            await _context.HabitsDates.AddAsync(habitsDates);
 
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
         }
 
         //TODO: Implement this method. Not sure how as of 1/25/22.

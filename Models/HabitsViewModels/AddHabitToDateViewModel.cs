@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace TrackMyHabit.Models.HabitsViewModels
 {
-    public class UpdateHabitWithDateViewModel
+    public class AddHabitToDateViewModel
     {
         public int HabitId { get; set; }
 

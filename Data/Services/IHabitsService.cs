@@ -11,7 +11,7 @@ namespace TrackMyHabit.Data.Services
 
         Task CreateHabitAsync(CreateHabitWithDateViewModel habits);
 
-        Task AddNewDateToHabitAsync(UpdateHabitWithDateViewModel habits);
+        Task AddNewDateToHabitAsync(AddHabitToDateViewModel habits);
 
         //Task DeleteEmptyDates();
     }

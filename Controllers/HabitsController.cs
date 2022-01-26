@@ -85,7 +85,7 @@ namespace TrackMyHabit.Controllers
         {
 
             var habitsDetails = await _service.GetHabitByIdAsync(id);
-            var habits = new UpdateHabitWithDateViewModel()
+            var habits = new AddHabitToDateViewModel()
             {
                 HabitId = habitsDetails.Id,
                 HabitName = habitsDetails.Name,
@@ -103,7 +103,7 @@ namespace TrackMyHabit.Controllers
         // POST: Habits/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditAsync(UpdateHabitWithDateViewModel habit)
+        public async Task<IActionResult> EditAsync(AddHabitToDateViewModel habit)
         {
             var listOfHabits = await _service.GetAllAsync();
             if (!ModelState.IsValid)
