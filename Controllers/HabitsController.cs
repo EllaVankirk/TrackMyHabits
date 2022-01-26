@@ -53,6 +53,7 @@ namespace TrackMyHabit.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var habitsDetails = await _service.GetHabitByIdAsync(id);
+
             if (habitsDetails == null)
             {
                 return NotFound();
@@ -82,7 +83,7 @@ namespace TrackMyHabit.Controllers
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
-            //I need to make this a viewmodel
+
             var habitsDetails = await _service.GetHabitByIdAsync(id);
             var habits = new UpdateHabitWithDateViewModel()
             {
@@ -102,14 +103,14 @@ namespace TrackMyHabit.Controllers
         // POST: Habits/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, UpdateHabitWithDateViewModel habit)
+        public async Task<IActionResult> EditAsync(UpdateHabitWithDateViewModel habit)
         {
             var listOfHabits = await _service.GetAllAsync();
             if (!ModelState.IsValid)
             {
                 return View(habit);
             }
-            await _service.AddDateToHabit(habit);
+            await _service.AddNewDateToHabitAsync(habit);
             return View("Index", listOfHabits);
         }
 
@@ -140,10 +141,10 @@ namespace TrackMyHabit.Controllers
         }
 
         //I don't need a view I don't think, I just need to be able to us this method ?
-        public async void CleanUpDates()
-        {
-            await _service.DeleteEmptyDates();
-        }
+        //public async void CleanUpDates()
+        //{
+        //    await _service.DeleteEmptyDates();
+        //}
 
         //private bool HabitsExists(int id)
         //{

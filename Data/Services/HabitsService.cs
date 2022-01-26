@@ -27,7 +27,7 @@ namespace TrackMyHabit.Data.Services
                 Colour = habits.HabitColor,
             };
             await _context.Habits.AddAsync(newHabit);
-            _context.SaveChanges();
+            await _context.SaveChangesAsync();
 
             var allDates = await _context.AllDates.ToListAsync();
             var currentHabitDate = habits.HabitDate.ToLongDateString();
@@ -44,8 +44,8 @@ namespace TrackMyHabit.Data.Services
                             HabitsId = newHabit.Id,
                             AllDatesId = date.Id
                         };
-                        _context.HabitsDates.Add(habitsDates);
-                        _context.SaveChanges();
+                        await _context.HabitsDates.AddAsync(habitsDates);
+                        await _context.SaveChangesAsync();
                     }
                     //otherwise make a new date and create a new habitsdates
                     else
@@ -54,56 +54,50 @@ namespace TrackMyHabit.Data.Services
                         {
                             Date = habits.HabitDate,
                         };
-                        _context.AllDates.Add(newDate);
-                        _context.SaveChanges();
+                        await _context.AllDates.AddAsync(newDate);
+                        await _context.SaveChangesAsync();
 
                         var habitsDates = new HabitsDates
                         {
                             HabitsId = newHabit.Id,
                             AllDatesId = newDate.Id,
                         };
-                        _context.HabitsDates.Add(habitsDates);
-                        _context.SaveChanges();
+                        await _context.HabitsDates.AddAsync(habitsDates);
+                        await _context.SaveChangesAsync();
                     }
                 }
             }
-            else //if it is null what do we do ? create a new date and habitdate.
+            else //if it is less than 1, create a new date and habitdate.
             {
                 var newDate = new AllDates
                 {
                     Date = habits.HabitDate,
                 };
-                _context.AllDates.Add(newDate);
-                _context.SaveChanges();
+                await _context.AllDates.AddAsync(newDate);
+                await _context.SaveChangesAsync();
 
                 var habitsDates = new HabitsDates
                 {
                     HabitsId = newHabit.Id,
                     AllDatesId = newDate.Id,
                 };
-                _context.HabitsDates.Add(habitsDates);
-                _context.SaveChanges();
+                await _context.HabitsDates.AddAsync(habitsDates);
+                await _context.SaveChangesAsync();
             }
         }
 
 
         public async Task<Habits> GetHabitByIdAsync(int id)
         {
-            var habitDetails = _context.Habits.Include(hd => hd.HabitsDates)
+            var habitDetails = await _context.Habits.Include(hd => hd.HabitsDates)
                 .ThenInclude(a => a.AllDates)
                 .FirstOrDefaultAsync(h => h.Id == id);
-            return await habitDetails;
+            return habitDetails;
         }
 
 
-        public async Task AddDateToHabit(UpdateHabitWithDateViewModel habit)
+        public async Task AddNewDateToHabitAsync(UpdateHabitWithDateViewModel habit)
         {
-
-            //retrieves data
-            var habitDetails = await _context.Habits.Include(hd => hd.HabitsDates)
-                .ThenInclude(a => a.AllDates)
-                .FirstOrDefaultAsync(h => h.Id == habit.HabitId);
-
             //Create new date
             var newDate = new AllDates
             {
@@ -124,13 +118,9 @@ namespace TrackMyHabit.Data.Services
             _context.SaveChanges();
         }
 
-        public async Task DeleteEmptyDates()
-        {
-
-            //what do i want to say?
-            //if a dates[i] is NOT inside habitsDates
-            //remove the date from the db
-
-        }
+        //TODO: Implement this method. Not sure how as of 1/25/22.
+        //public async Task DeleteEmptyDates()
+        //{
+        //}
     }
 }
