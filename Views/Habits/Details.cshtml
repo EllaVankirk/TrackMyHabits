@@ -20,7 +20,7 @@
         <dd class="col-sm-10">
             @foreach (var date in Model.HabitsDates)
             {
-                @date.AllDates.Date.ToLongDateString()
+                <span>@date.AllDates.Date.ToLongDateString(),&nbsp;</span>
             }
         </dd>
         <dt class="col-sm-2">

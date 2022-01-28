@@ -39,7 +39,7 @@ namespace TrackMyHabit.Data.Services
                 foreach (var date in allDates)
                 {
                     //if found add the dateID to make a new habitsdates
-                    if (currentHabitDate == date.Date.ToLongDateString()) //if true, increment existingDatesCounter, create a new habitsdates, save it and exit the loop.
+                    if (currentHabitDate == date.Date.ToLongDateString())
                     {
                         var habitsDates = new HabitsDates
                         {

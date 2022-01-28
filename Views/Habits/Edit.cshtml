@@ -24,10 +24,12 @@
             </div>
             <div class="form-group">
                 <h2>List of dates: </h2>
-                @foreach (var date in Model.HabitsDates)
-                {
-                    @date.AllDates.Date.ToLongDateString()
-                }
+                <div>
+                    @foreach (var date in Model.HabitsDates)
+                    {
+                        <span>@date.AllDates.Date.ToLongDateString(),&nbsp;</span>
+                    }
+                </div>
             </div>
             <div>
                 <div class="form-group">
