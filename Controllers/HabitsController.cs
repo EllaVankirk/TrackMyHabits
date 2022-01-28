@@ -76,7 +76,7 @@ namespace TrackMyHabit.Controllers
         public async Task<IActionResult> Create(CreateHabitWithDateViewModel habits)
         {
             await _service.CreateHabitAsync(habits);
-            return View(habits);
+            return RedirectToAction(nameof(Index));
         }
 
         // GET: Habits/Edit/5
@@ -105,12 +105,12 @@ namespace TrackMyHabit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> EditAsync(AddHabitToDateViewModel habit)
         {
-            var listOfHabits = await _service.GetAllAsync();
             if (!ModelState.IsValid)
             {
                 return View(habit);
             }
             await _service.AddNewDateToHabitAsync(habit);
+            var listOfHabits = await _service.GetAllAsync();
             return View("Index", listOfHabits);
         }
 

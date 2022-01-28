@@ -31,7 +31,6 @@ namespace TrackMyHabit.Data.Services
 
             var allDates = await _context.AllDates.ToListAsync();
             var currentHabitDate = habits.HabitDate.ToLongDateString();
-
             var incrementCounter = 0;
 
             if (allDates.Count > 0)
@@ -103,63 +102,87 @@ namespace TrackMyHabit.Data.Services
         }
 
 
-        public async Task AddNewDateToHabitAsync(AddHabitToDateViewModel habit)
+        public async Task AddNewDateToHabitAsync(AddHabitToDateViewModel habits)
         {
-            //Create new date
-            var allDates = await _context.AllDates.ToListAsync();
-            var currentHabitDate = habit.HabitDate.ToLongDateString();
-            var incrementCounter = 0;
+            //Searches DB based on PK
+            var habitID = _context.Habits.Find(habits.HabitId);
 
-            if (allDates.Count > 0)
+            //searches DB for a matching date (hopefully) ID: 1
+            var date = _context.AllDates.Where(d => d.Date == habits.HabitDate).FirstOrDefault();
+
+            if (date == null)
             {
-                foreach (var date in allDates)
+                var newDate = new AllDates
                 {
-                    //if found add the dateID to make a new habitsdates
-                    if (currentHabitDate == date.Date.ToLongDateString())
-                    {
-                        break;
-                    }
-                    else if (currentHabitDate != date.Date.ToLongDateString())
-                    {
-                        incrementCounter++;
-                        continue;
-                    }
-                }
-                if (incrementCounter == allDates.Count)
-                {
-                    var date = new AllDates
-                    {
-                        Date = habit.HabitDate,
-                    };
-                    await _context.AllDates.AddAsync(date);
-                    await _context.SaveChangesAsync();
+                    Date = habits.HabitDate
+                };
 
-                    var habitDates = new HabitsDates
+                await _context.AllDates.AddAsync(newDate);
+                await _context.SaveChangesAsync();
+
+                var newHabitsDates = new HabitsDates
+                {
+                    AllDatesId = newDate.Id,
+                    HabitsId = habits.HabitId,
+                };
+                await _context.HabitsDates.AddAsync(newHabitsDates);
+                await _context.SaveChangesAsync();
+            }
+            else if (date != null)
+            {
+                var habitsDate = _context.HabitsDates.Where(hd => hd.AllDatesId == date.Id).
+                    Where(hd => hd.HabitsId == habits.HabitId);
+                if (!habitsDate.Any())
+                {
+                    var newHabitsDates = new HabitsDates
                     {
-                        HabitsId = habit.HabitId,
-                        AllDatesId = date.Id
+                        AllDatesId = date.Id,
+                        HabitsId = habits.HabitId
                     };
-                    await _context.HabitsDates.AddAsync(habitDates);
+                    await _context.HabitsDates.AddAsync(newHabitsDates);
                     await _context.SaveChangesAsync();
                 }
             }
-            else //if it is less than 1, create a new date and habitdate.
-            {
-                var date = new AllDates
-                {
-                    Date = habit.HabitDate,
-                };
-                await _context.AllDates.AddAsync(date);
-                await _context.SaveChangesAsync();
 
-                var habitDates = new HabitsDates
-                {
-                    HabitsId = habit.HabitId,
-                    AllDatesId = date.Id
-                };
-                await _context.HabitsDates.AddAsync(habitDates);
-                await _context.SaveChangesAsync();
-            }
+            //what do we need to say?
+
+            //if the habitID and the date are in the habitsdates DB,
+                //do nothing
+            //if the habitID is in the DB
+
+
+            //we have a habitID, and we have a dateID
+                //now what?
+
+
+
+
+            //Check for the date in the allDates DB.
+                //if it's in the AllDatesDB,
+                    //check the HabitsDatesDb for that dateID and habitID
+                //if its not there
+                    //add a new date.
+
+
+
+
+            //var newDate = new AllDates
+            //{
+            //    Date = habit.HabitDate,
+            //};
+
+            //await _context.AllDates.AddAsync(newDate);
+            //await _context.SaveChangesAsync();
+
+            //var habitsDates = new HabitsDates
+            //{
+            //    HabitsId = habit.HabitId,
+            //    AllDatesId = newDate.Id,
+            //};
+
+            //await _context.HabitsDates.AddAsync(habitsDates);
+
+            //await _context.SaveChangesAsync();
         }
 
         //TODO: Implement this method. Not sure how as of 1/25/22.
