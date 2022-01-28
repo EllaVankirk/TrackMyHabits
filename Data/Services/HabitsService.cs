@@ -106,23 +106,60 @@ namespace TrackMyHabit.Data.Services
         public async Task AddNewDateToHabitAsync(AddHabitToDateViewModel habit)
         {
             //Create new date
-            var newDate = new AllDates
+            var allDates = await _context.AllDates.ToListAsync();
+            var currentHabitDate = habit.HabitDate.ToLongDateString();
+            var incrementCounter = 0;
+
+            if (allDates.Count > 0)
             {
-                Date = habit.HabitDate,
-            };
+                foreach (var date in allDates)
+                {
+                    //if found add the dateID to make a new habitsdates
+                    if (currentHabitDate == date.Date.ToLongDateString())
+                    {
+                        break;
+                    }
+                    else if (currentHabitDate != date.Date.ToLongDateString())
+                    {
+                        incrementCounter++;
+                        continue;
+                    }
+                }
+                if (incrementCounter == allDates.Count)
+                {
+                    var date = new AllDates
+                    {
+                        Date = habit.HabitDate,
+                    };
+                    await _context.AllDates.AddAsync(date);
+                    await _context.SaveChangesAsync();
 
-            await _context.AllDates.AddAsync(newDate);
-            await _context.SaveChangesAsync();
-
-            var habitsDates = new HabitsDates
+                    var habitDates = new HabitsDates
+                    {
+                        HabitsId = habit.HabitId,
+                        AllDatesId = date.Id
+                    };
+                    await _context.HabitsDates.AddAsync(habitDates);
+                    await _context.SaveChangesAsync();
+                }
+            }
+            else //if it is less than 1, create a new date and habitdate.
             {
-                HabitsId = habit.HabitId,
-                AllDatesId = newDate.Id,
-            };
+                var date = new AllDates
+                {
+                    Date = habit.HabitDate,
+                };
+                await _context.AllDates.AddAsync(date);
+                await _context.SaveChangesAsync();
 
-            await _context.HabitsDates.AddAsync(habitsDates);
-
-            await _context.SaveChangesAsync();
+                var habitDates = new HabitsDates
+                {
+                    HabitsId = habit.HabitId,
+                    AllDatesId = date.Id
+                };
+                await _context.HabitsDates.AddAsync(habitDates);
+                await _context.SaveChangesAsync();
+            }
         }
 
         //TODO: Implement this method. Not sure how as of 1/25/22.

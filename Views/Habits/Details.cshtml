@@ -33,7 +33,7 @@
     <div>
         <a asp-action="Edit" asp-route-id="@Model.Id" class="nav-item px-2">Edit</a>
         @*FIXME*@
-        <a asp-controller="AllDates" asp-action="AddHabit" asp-route-id="@Model.Id" class="nav-item px-2">Add Date</a>
+        <a asp-controller="Habits" asp-action="Edit" asp-route-id="@Model.Id" class="nav-item px-2">Add Date</a>
         <a asp-action="Index" class="nav-item px-2">Back to List</a>
     </div>
 </div>
