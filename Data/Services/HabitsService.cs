@@ -34,32 +34,21 @@ namespace TrackMyHabit.Data.Services
 
             if (date == null)
             {
-                var newDate = new AllDates
+                date = new AllDates
                 {
                     Date = habits.HabitDate,
                 };
-                await _context.AllDates.AddAsync(newDate);
-                await _context.SaveChangesAsync();
-
-                var newHabitDate = new HabitsDates
-                {
-                    AllDatesId = newDate.Id,
-                    HabitsId = newHabit.Id,
-                };
-
-                await _context.HabitsDates.AddAsync(newHabitDate);
+                await _context.AllDates.AddAsync(date);
                 await _context.SaveChangesAsync();
             }
-            else if (date != null)
+
+            var newHabitDate = new HabitsDates
             {
-                var newHabitDate = new HabitsDates
-                {
-                    AllDatesId = date.Id,
-                    HabitsId = newHabit.Id,
-                };
-                await _context.HabitsDates.AddAsync(newHabitDate);
-                await _context.SaveChangesAsync();
-            }
+                AllDatesId = date.Id,
+                HabitsId = newHabit.Id,
+            };
+            await _context.HabitsDates.AddAsync(newHabitDate);
+            await _context.SaveChangesAsync();
         }
 
 
@@ -89,6 +78,7 @@ namespace TrackMyHabit.Data.Services
 
                 await _context.AllDates.AddAsync(newDate);
                 await _context.SaveChangesAsync();
+
 
                 var newHabitsDates = new HabitsDates
                 {

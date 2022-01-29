@@ -7,8 +7,9 @@
 
 <div class="row" style="font-family:'Lato', sans-serif">
     <div class="col-md-6 offset-md-3">
-        <h1 style="font-family:'Open Sans', sans-serif">Add a new date</h1>
+        <h1 style="font-family:'Open Sans', sans-serif">Edit your habit</h1>
         <hr />
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="HabitId" />
             <div class="form-group">
@@ -30,7 +31,6 @@
                     }
                 </div>
             </div>
-            <form asp-action="AddDate">
             <div>
                 <div class="form-group">
                     <h2>Add a new date</h2>

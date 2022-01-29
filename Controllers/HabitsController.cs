@@ -81,7 +81,7 @@ namespace TrackMyHabit.Controllers
 
         // GET: Habits/Edit/5
         [HttpGet]
-        public async Task<IActionResult> Edit(int id)
+        public async Task<IActionResult> AddDate(int id)
         {
 
             var habitsDetails = await _service.GetHabitByIdAsync(id);
@@ -103,7 +103,7 @@ namespace TrackMyHabit.Controllers
         // POST: Habits/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> EditAsync(AddHabitToDateViewModel habit)
+        public async Task<IActionResult> AddDateAsync(AddHabitToDateViewModel habit)
         {
             if (!ModelState.IsValid)
             {
