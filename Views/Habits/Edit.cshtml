@@ -1,5 +1,4 @@
-﻿@model TrackMyHabit.Models.HabitsViewModels.AddHabitToDateViewModel
-
+﻿@model TrackMyHabit.Models.Habits
 
 @{
     ViewData["Title"] = "Edit";
@@ -7,37 +6,20 @@
 
 <div class="row" style="font-family:'Lato', sans-serif">
     <div class="col-md-6 offset-md-3">
-        <h1 style="font-family:'Open Sans', sans-serif">Add a new date</h1>
+        <h1 style="font-family:'Open Sans', sans-serif">@Model.Name</h1>
         <hr />
+        <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="HabitId" />
+            <input type="hidden" asp-for="Id" />
             <div class="form-group">
-                <label asp-for="HabitName" class="control-label"></label>
-                <input asp-for="HabitName" class="form-control" />
-                <span asp-validation-for="HabitName" class="text-danger"></span>
+                <label asp-for="Name" class="control-label"></label>
+                <input asp-for="Name" class="form-control" />
+                <span asp-validation-for="Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="HabitColor" class="control-label"></label>
-                <input type="color" asp-for="HabitColor" class="control-Label" />
-                <span asp-validation-for="HabitColor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <h2>List of dates: </h2>
-                <div>
-                    @foreach (var date in Model.HabitsDates)
-                    {
-                        <span>@date.AllDates.Date.ToLongDateString(),&nbsp;</span>
-                    }
-                </div>
-            </div>
-            <form asp-action="AddDate">
-            <div>
-                <div class="form-group">
-                    <h2>Add a new date</h2>
-                    <label asp-for="HabitDate"></label>
-                    <input asp-for="HabitDate" type="date" value="" />
-                    <span asp-validation-for="HabitDate"></span>
-                </div>
+                <label asp-for="Colour" class="control-label"></label>
+                <input type="color" asp-for="Colour" class="control-Label" />
+                <span asp-validation-for="Colour" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

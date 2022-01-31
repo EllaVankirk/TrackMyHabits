@@ -114,6 +114,20 @@ namespace TrackMyHabit.Controllers
             return View("Index", listOfHabits);
         }
 
+        public async Task<IActionResult> Edit(int id)
+        {
+            var habit = await _service.GetHabitByIdAsync(id);
+            return View(habit);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> Edit(int id, [Bind("Id, Name, Colour")] Habits habit)
+        {
+            await _service.UpdateAsync(id, habit);
+            var updatedHabit = await _service.GetHabitByIdAsync(id);
+;            return View(updatedHabit);
+        }
+
         // GET: Habits/Delete/5
         public async Task<IActionResult> DeleteAsync(int id)
         {

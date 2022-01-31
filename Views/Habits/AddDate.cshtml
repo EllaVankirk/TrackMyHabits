@@ -9,35 +9,37 @@
     <div class="col-md-6 offset-md-3">
         <h1 style="font-family:'Open Sans', sans-serif">Edit your habit</h1>
         <hr />
-        <form asp-action="Edit">
+        <dl class="row">
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.HabitName)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.HabitName)
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.HabitsDates)
+            </dt>
+            <dd class="col-sm-10">
+                @foreach (var date in Model.HabitsDates)
+                {
+                    <span>@date.AllDates.Date.ToLongDateString(),&nbsp;</span>
+                }
+            </dd>
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.HabitColor)
+            </dt>
+            <dd class="col-sm-2" style="background-color:@Model.HabitColor; color:@Model.HabitColor">
+                @Html.DisplayFor(model => model.HabitColor)
+            </dd>
+        </dl>
+        <form asp-action="AddDate">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="HabitId" />
             <div class="form-group">
-                <label asp-for="HabitName" class="control-label"></label>
-                <input asp-for="HabitName" class="form-control" />
-                <span asp-validation-for="HabitName" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="HabitColor" class="control-label"></label>
-                <input type="color" asp-for="HabitColor" class="control-Label" />
-                <span asp-validation-for="HabitColor" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <h2>List of dates: </h2>
-                <div>
-                    @foreach (var date in Model.HabitsDates)
-                    {
-                        <span>@date.AllDates.Date.ToLongDateString(),&nbsp;</span>
-                    }
-                </div>
-            </div>
-            <div>
-                <div class="form-group">
-                    <h2>Add a new date</h2>
-                    <label asp-for="HabitDate"></label>
-                    <input asp-for="HabitDate" type="date" value="" />
-                    <span asp-validation-for="HabitDate"></span>
-                </div>
+                <h2>Add a new date</h2>
+                <label asp-for="HabitDate"></label>
+                <input asp-for="HabitDate" type="date" value="" />
+                <span asp-validation-for="HabitDate"></span>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
