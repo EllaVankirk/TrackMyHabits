@@ -28,8 +28,8 @@ namespace TrackMyHabit.Data
                 .HasKey(hd => new { hd.AllDatesId, hd.HabitsId });
 
 
-            modelBuilder.Entity<HabitsDates>().HasOne(h => h.Habit).WithMany(hd => hd.HabitsDates).HasForeignKey(h => h.HabitsId);
-            modelBuilder.Entity<HabitsDates>().HasOne(d => d.AllDates).WithMany(hd => hd.HabitsDates).HasForeignKey(d => d.AllDatesId);
+            //modelBuilder.Entity<HabitsDates>().HasOne(h => h.Habit).WithMany(hd => hd.HabitsDates).HasForeignKey(h => h.HabitsId);
+            //modelBuilder.Entity<HabitsDates>().HasOne(d => d.AllDates).WithMany(hd => hd.HabitsDates).HasForeignKey(d => d.AllDatesId);
 
             base.OnModelCreating(modelBuilder);
         }
