@@ -5,15 +5,10 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="TagHelpers\CalendarTagHelper.cs" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Remove="wwwroot\BISCalendarSS.png" />
   </ItemGroup>
 
   <ItemGroup>
-    <None Include="TagHelpers\CalendarTagHelper.cs" />
     <None Include="wwwroot\BISCalendarSS.png" />
   </ItemGroup>
 
