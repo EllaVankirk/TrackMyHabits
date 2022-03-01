@@ -38,8 +38,9 @@ namespace TrackMyHabit
 
             services.AddRazorPages();
 
+            //Add Identity
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = false)
-                  .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<ApplicationDbContext>();
 
             //Identity Configuration
             services.Configure<IdentityOptions>(options =>

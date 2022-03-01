@@ -12,7 +12,7 @@ namespace TrackMyHabit.Data.Services
 
         Task<List<Habits>> GetAllHabitsByUserAsync(string userId);
 
-        Task CreateHabitAsync(CreateHabitWithDateViewModel habits);
+        Task CreateHabitAsync(CreateHabitWithDateViewModel habits, string userId);
 
         Task AddNewDateToHabitAsync(AddHabitToDateViewModel habits);
 

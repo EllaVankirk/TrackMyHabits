@@ -18,19 +18,23 @@ namespace TrackMyHabit.Data.Services
             _context = context;
         }
 
+
         public async Task<List<Habits>> GetAllHabitsByUserAsync(string userId)
         {
             var allHabits = await _context.Habits.Include(h => h.User).Where(h => h.UserId == userId).ToListAsync();
             return allHabits;
         }
 
-        public async Task CreateHabitAsync(CreateHabitWithDateViewModel habits)
+
+        //Did I need a viewModel, or could i just have passed in different arguments? Which is more efficient
+        public async Task CreateHabitAsync(CreateHabitWithDateViewModel habits, string userId)
         {
             //Create new habit.
             var newHabit = new Habits
             {
                 Name = habits.HabitName,
                 Colour = habits.HabitColor,
+                UserId = userId,
             };
             await _context.Habits.AddAsync(newHabit);
             await _context.SaveChangesAsync();

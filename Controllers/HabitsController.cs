@@ -15,17 +15,18 @@ namespace TrackMyHabit.Controllers
     {
         private readonly IHabitsService _service;
 
+
         public HabitsController(IHabitsService service)
         {
             _service = service;
         }
+
 
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             var habits = await _service.GetAllHabitsByUserAsync(userId);
-
             return View(habits);
         }
 
@@ -63,14 +64,13 @@ namespace TrackMyHabit.Controllers
         public async Task<IActionResult> Details(int id)
         {
             var habitsDetails = await _service.GetHabitByIdAsync(id);
-
             if (habitsDetails == null)
             {
                 return NotFound();
             }
-
             return View(habitsDetails);
         }
+
 
         // GET: Habits/Create
         public IActionResult Create()
@@ -85,15 +85,16 @@ namespace TrackMyHabit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateHabitWithDateViewModel habits)
         {
-            await _service.CreateHabitAsync(habits);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await _service.CreateHabitAsync(habits, userId);
             return RedirectToAction(nameof(Index));
         }
+
 
         // GET: Habits/Edit/5
         [HttpGet]
         public async Task<IActionResult> AddDate(int id)
         {
-
             var habitsDetails = await _service.GetHabitByIdAsync(id);
             var habits = new AddHabitToDateViewModel()
             {
