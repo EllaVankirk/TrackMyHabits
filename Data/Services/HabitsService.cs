@@ -18,6 +18,12 @@ namespace TrackMyHabit.Data.Services
             _context = context;
         }
 
+        public async Task<List<Habits>> GetAllHabitsByUserAsync(string userId)
+        {
+            var allHabits = await _context.Habits.Include(h => h.User).Where(h => h.UserId == userId).ToListAsync();
+            return allHabits;
+        }
+
         public async Task CreateHabitAsync(CreateHabitWithDateViewModel habits)
         {
             //Create new habit.
@@ -31,7 +37,6 @@ namespace TrackMyHabit.Data.Services
 
             //look for existing date
             var date = _context.AllDates.Where(d => d.Date == habits.HabitDate).FirstOrDefault();
-
             if (date == null)
             {
                 date = new AllDates
@@ -63,23 +68,23 @@ namespace TrackMyHabit.Data.Services
 
         public async Task AddNewDateToHabitAsync(AddHabitToDateViewModel habits)
         {
+            //TODO: figure out if I need this line
             //Searches DB based on PK
             var habitID = _context.Habits.Find(habits.HabitId);
 
             //searches DB for a matching date (hopefully) ID: 1
             var date = _context.AllDates.Where(d => d.Date == habits.HabitDate).FirstOrDefault();
-
+            //if date is null create a new date and save it.
             if (date == null)
             {
                 var newDate = new AllDates
                 {
                     Date = habits.HabitDate
                 };
-
                 await _context.AllDates.AddAsync(newDate);
                 await _context.SaveChangesAsync();
 
-
+                //create a new habitsdate and save it
                 var newHabitsDates = new HabitsDates
                 {
                     AllDatesId = newDate.Id,

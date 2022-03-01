@@ -1,4 +1,5 @@
 ﻿
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -24,10 +25,11 @@ namespace TrackMyHabit.Models
 
         public List<HabitsDates> HabitsDates { get; set; }
 
-
         [Display(Name = "Dates")]
         public List<AllDates> AllDates { get; set; }
 
+        public IdentityUser User { get; set; }
+        public string UserId { get; set; }
 
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using TrackMyHabit.Data;
 using TrackMyHabit.Data.Services;
@@ -19,34 +20,43 @@ namespace TrackMyHabit.Controllers
             _service = service;
         }
 
-        //GET: Habits
-        //Index Sort and Search method
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            var habits = await _service.GetAllAsync();
-
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-            ViewData["CurrentFilter"] = searchString;
-
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                habits = habits.Where(h => h.Name.Contains(searchString));
-            }
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    habits = habits.OrderByDescending(h => h.Name);
-                    break;
-                default:
-                    habits = habits.OrderBy(h => h.Name);
-                    break;
-            }
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var habits = await _service.GetAllHabitsByUserAsync(userId);
 
             return View(habits);
         }
+
+        //GET: Habits
+        //Index Sort and Search method
+        //public async Task<IActionResult> Index(string sortOrder, string searchString)
+        //{
+        //    var habits = await _service.GetAllAsync();
+
+        //    ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+        //    ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+        //    ViewData["CurrentFilter"] = searchString;
+
+
+        //    if (!String.IsNullOrEmpty(searchString))
+        //    {
+        //        habits = habits.Where(h => h.Name.Contains(searchString));
+        //    }
+
+        //    switch (sortOrder)
+        //    {
+        //        case "name_desc":
+        //            habits = habits.OrderByDescending(h => h.Name);
+        //            break;
+        //        default:
+        //            habits = habits.OrderBy(h => h.Name);
+        //            break;
+        //    }
+
+        //    return View(habits);
+        //}
 
         // GET: Habits/Details/5
 
