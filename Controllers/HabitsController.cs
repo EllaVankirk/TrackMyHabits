@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using TrackMyHabit.Data;
 using TrackMyHabit.Data.Services;
@@ -9,58 +11,68 @@ using TrackMyHabit.Models.HabitsViewModels;
 
 namespace TrackMyHabit.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class HabitsController : Controller
     {
         private readonly IHabitsService _service;
+
 
         public HabitsController(IHabitsService service)
         {
             _service = service;
         }
 
-        //GET: Habits
-        //Index Sort and Search method
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+
+        [HttpGet]
+        public async Task<IActionResult> Index()
         {
-            var habits = await _service.GetAllAsync();
-
-            ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
-            ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
-            ViewData["CurrentFilter"] = searchString;
-
-
-            if (!String.IsNullOrEmpty(searchString))
-            {
-                habits = habits.Where(h => h.Name.Contains(searchString));
-            }
-
-            switch (sortOrder)
-            {
-                case "name_desc":
-                    habits = habits.OrderByDescending(h => h.Name);
-                    break;
-                default:
-                    habits = habits.OrderBy(h => h.Name);
-                    break;
-            }
-
+            string userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var habits = await _service.GetAllHabitsByUserAsync(userId);
             return View(habits);
         }
+
+        //GET: Habits
+        //Index Sort and Search method
+        //public async Task<IActionResult> Index(string sortOrder, string searchString)
+        //{
+        //    var habits = await _service.GetAllAsync();
+
+        //    ViewData["NameSortParm"] = String.IsNullOrEmpty(sortOrder) ? "name_desc" : "";
+        //    ViewData["DateSortParm"] = sortOrder == "Date" ? "date_desc" : "Date";
+        //    ViewData["CurrentFilter"] = searchString;
+
+
+        //    if (!String.IsNullOrEmpty(searchString))
+        //    {
+        //        habits = habits.Where(h => h.Name.Contains(searchString));
+        //    }
+
+        //    switch (sortOrder)
+        //    {
+        //        case "name_desc":
+        //            habits = habits.OrderByDescending(h => h.Name);
+        //            break;
+        //        default:
+        //            habits = habits.OrderBy(h => h.Name);
+        //            break;
+        //    }
+
+        //    return View(habits);
+        //}
 
         // GET: Habits/Details/5
 
         public async Task<IActionResult> Details(int id)
         {
-            var habitsDetails = await _service.GetHabitByIdAsync(id);
-
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var habitsDetails = await _service.GetHabitByIdAsync(id, userId);
             if (habitsDetails == null)
             {
                 return NotFound();
             }
-
             return View(habitsDetails);
         }
+
 
         // GET: Habits/Create
         public IActionResult Create()
@@ -75,16 +87,18 @@ namespace TrackMyHabit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create(CreateHabitWithDateViewModel habits)
         {
-            await _service.CreateHabitAsync(habits);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            await _service.CreateHabitAsync(habits, userId);
             return RedirectToAction(nameof(Index));
         }
+
 
         // GET: Habits/Edit/5
         [HttpGet]
         public async Task<IActionResult> AddDate(int id)
         {
-
-            var habitsDetails = await _service.GetHabitByIdAsync(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var habitsDetails = await _service.GetHabitByIdAsync(id, userId);
             var habits = new AddHabitToDateViewModel()
             {
                 HabitId = habitsDetails.Id,
@@ -105,33 +119,37 @@ namespace TrackMyHabit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddDateAsync(AddHabitToDateViewModel habit)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!ModelState.IsValid)
             {
                 return View(habit);
             }
             await _service.AddNewDateToHabitAsync(habit);
-            var listOfHabits = await _service.GetAllAsync();
+            var listOfHabits = await _service.GetAllHabitsByUserAsync(userId);
             return View("Index", listOfHabits);
         }
 
         public async Task<IActionResult> Edit(int id)
         {
-            var habit = await _service.GetHabitByIdAsync(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var habit = await _service.GetHabitByIdAsync(id, userId);
             return View(habit);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(int id, [Bind("Id, Name, Colour")] Habits habit)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             await _service.UpdateAsync(id, habit);
-            var updatedHabit = await _service.GetHabitByIdAsync(id);
+            var updatedHabit = await _service.GetHabitByIdAsync(id, userId);
 ;            return View(updatedHabit);
         }
 
         // GET: Habits/Delete/5
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            var habitDetails = await _service.GetHabitByIdAsync(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var habitDetails = await _service.GetHabitByIdAsync(id, userId);
             if (!ModelState.IsValid)
             {
                 return NotFound();
@@ -145,7 +163,8 @@ namespace TrackMyHabit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var habitDetails = await _service.GetHabitByIdAsync(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var habitDetails = await _service.GetHabitByIdAsync(id, userId);
             if (habitDetails == null)
             {
                 return NotFound();

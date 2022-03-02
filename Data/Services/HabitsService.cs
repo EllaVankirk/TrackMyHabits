@@ -18,20 +18,29 @@ namespace TrackMyHabit.Data.Services
             _context = context;
         }
 
-        public async Task CreateHabitAsync(CreateHabitWithDateViewModel habits)
+
+        public async Task<List<Habits>> GetAllHabitsByUserAsync(string userId)
+        {
+            var allHabits = await _context.Habits.Include(h => h.User).Where(h => h.UserId == userId).ToListAsync();
+            return allHabits;
+        }
+
+
+        //Did I need a viewModel, or could i just have passed in different arguments? Which is more efficient
+        public async Task CreateHabitAsync(CreateHabitWithDateViewModel habits, string userId)
         {
             //Create new habit.
             var newHabit = new Habits
             {
                 Name = habits.HabitName,
                 Colour = habits.HabitColor,
+                UserId = userId,
             };
             await _context.Habits.AddAsync(newHabit);
             await _context.SaveChangesAsync();
 
             //look for existing date
             var date = _context.AllDates.Where(d => d.Date == habits.HabitDate).FirstOrDefault();
-
             if (date == null)
             {
                 date = new AllDates
@@ -52,10 +61,12 @@ namespace TrackMyHabit.Data.Services
         }
 
 
-        public async Task<Habits> GetHabitByIdAsync(int id)
+        public async Task<Habits> GetHabitByIdAsync(int id, string userId)
         {
+            //var habitDetails = await _context.Habits.Include(h => h.UserId).Where(h => h.UserId == userId).ToListAsync();
             var habitDetails = await _context.Habits.Include(hd => hd.HabitsDates)
                 .ThenInclude(a => a.AllDates)
+                .Where(h => h.UserId == userId)
                 .FirstOrDefaultAsync(h => h.Id == id);
             return habitDetails;
         }
@@ -63,23 +74,23 @@ namespace TrackMyHabit.Data.Services
 
         public async Task AddNewDateToHabitAsync(AddHabitToDateViewModel habits)
         {
+            //TODO: figure out if I need this line
             //Searches DB based on PK
             var habitID = _context.Habits.Find(habits.HabitId);
 
             //searches DB for a matching date (hopefully) ID: 1
             var date = _context.AllDates.Where(d => d.Date == habits.HabitDate).FirstOrDefault();
-
+            //if date is null create a new date and save it.
             if (date == null)
             {
                 var newDate = new AllDates
                 {
                     Date = habits.HabitDate
                 };
-
                 await _context.AllDates.AddAsync(newDate);
                 await _context.SaveChangesAsync();
 
-
+                //create a new habitsdate and save it
                 var newHabitsDates = new HabitsDates
                 {
                     AllDatesId = newDate.Id,
@@ -103,6 +114,14 @@ namespace TrackMyHabit.Data.Services
                     await _context.SaveChangesAsync();
                 }
             }
+        }
+
+
+        public async Task<List<HabitsDates>> GetHabitsByUserAndMonth(DateTime date, string userId)
+        {
+            return await _context.HabitsDates.Where(hd => hd.AllDates.Date.Month == date.Month).Include(ad => ad.AllDates)
+                .Include(h => h.Habit).Where(hd => hd.Habit.UserId == userId)
+                .ToListAsync();
         }
 
         //TODO: Implement this method. Not sure how as of 1/25/22.

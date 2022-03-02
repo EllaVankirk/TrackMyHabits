@@ -255,7 +255,12 @@ namespace TrackMyHabit.Migrations
                         .HasColumnType("nvarchar(20)")
                         .HasMaxLength(20);
 
+                    b.Property<string>("UserId")
+                        .HasColumnType("nvarchar(450)");
+
                     b.HasKey("Id");
+
+                    b.HasIndex("UserId");
 
                     b.ToTable("Habits");
                 });
@@ -331,6 +336,13 @@ namespace TrackMyHabit.Migrations
                     b.HasOne("TrackMyHabit.Models.Habits", null)
                         .WithMany("AllDates")
                         .HasForeignKey("HabitsId");
+                });
+
+            modelBuilder.Entity("TrackMyHabit.Models.Habits", b =>
+                {
+                    b.HasOne("Microsoft.AspNetCore.Identity.IdentityUser", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId");
                 });
 
             modelBuilder.Entity("TrackMyHabit.Models.HabitsDates", b =>

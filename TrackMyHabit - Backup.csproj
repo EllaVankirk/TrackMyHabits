@@ -5,13 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="TagHelpers\**" />
-    <Content Remove="TagHelpers\**" />
-    <EmbeddedResource Remove="TagHelpers\**" />
-    <None Remove="TagHelpers\**" />
-  </ItemGroup>
-
-  <ItemGroup>
     <Content Remove="wwwroot\BISCalendarSS.png" />
   </ItemGroup>
 
