@@ -61,10 +61,12 @@ namespace TrackMyHabit.Data.Services
         }
 
 
-        public async Task<Habits> GetHabitByIdAsync(int id)
+        public async Task<Habits> GetHabitByIdAsync(int id, string userId)
         {
+            //var habitDetails = await _context.Habits.Include(h => h.UserId).Where(h => h.UserId == userId).ToListAsync();
             var habitDetails = await _context.Habits.Include(hd => hd.HabitsDates)
                 .ThenInclude(a => a.AllDates)
+                .Where(h => h.UserId == userId)
                 .FirstOrDefaultAsync(h => h.Id == id);
             return habitDetails;
         }
@@ -112,6 +114,14 @@ namespace TrackMyHabit.Data.Services
                     await _context.SaveChangesAsync();
                 }
             }
+        }
+
+
+        public async Task<List<HabitsDates>> GetHabitsByUserAndMonth(DateTime date, string userId)
+        {
+            return await _context.HabitsDates.Where(hd => hd.AllDates.Date.Month == date.Month).Include(ad => ad.AllDates)
+                .Include(h => h.Habit).Where(hd => hd.Habit.UserId == userId)
+                .ToListAsync();
         }
 
         //TODO: Implement this method. Not sure how as of 1/25/22.

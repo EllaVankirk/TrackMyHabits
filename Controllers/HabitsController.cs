@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Linq;
 using System.Security.Claims;
@@ -10,7 +11,7 @@ using TrackMyHabit.Models.HabitsViewModels;
 
 namespace TrackMyHabit.Controllers
 {
-    //[Authorize]
+    [Authorize]
     public class HabitsController : Controller
     {
         private readonly IHabitsService _service;
@@ -63,7 +64,8 @@ namespace TrackMyHabit.Controllers
 
         public async Task<IActionResult> Details(int id)
         {
-            var habitsDetails = await _service.GetHabitByIdAsync(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var habitsDetails = await _service.GetHabitByIdAsync(id, userId);
             if (habitsDetails == null)
             {
                 return NotFound();
@@ -95,7 +97,8 @@ namespace TrackMyHabit.Controllers
         [HttpGet]
         public async Task<IActionResult> AddDate(int id)
         {
-            var habitsDetails = await _service.GetHabitByIdAsync(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var habitsDetails = await _service.GetHabitByIdAsync(id, userId);
             var habits = new AddHabitToDateViewModel()
             {
                 HabitId = habitsDetails.Id,
@@ -116,33 +119,37 @@ namespace TrackMyHabit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddDateAsync(AddHabitToDateViewModel habit)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             if (!ModelState.IsValid)
             {
                 return View(habit);
             }
             await _service.AddNewDateToHabitAsync(habit);
-            var listOfHabits = await _service.GetAllAsync();
+            var listOfHabits = await _service.GetAllHabitsByUserAsync(userId);
             return View("Index", listOfHabits);
         }
 
         public async Task<IActionResult> Edit(int id)
         {
-            var habit = await _service.GetHabitByIdAsync(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var habit = await _service.GetHabitByIdAsync(id, userId);
             return View(habit);
         }
 
         [HttpPost]
         public async Task<IActionResult> Edit(int id, [Bind("Id, Name, Colour")] Habits habit)
         {
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
             await _service.UpdateAsync(id, habit);
-            var updatedHabit = await _service.GetHabitByIdAsync(id);
+            var updatedHabit = await _service.GetHabitByIdAsync(id, userId);
 ;            return View(updatedHabit);
         }
 
         // GET: Habits/Delete/5
         public async Task<IActionResult> DeleteAsync(int id)
         {
-            var habitDetails = await _service.GetHabitByIdAsync(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var habitDetails = await _service.GetHabitByIdAsync(id, userId);
             if (!ModelState.IsValid)
             {
                 return NotFound();
@@ -156,7 +163,8 @@ namespace TrackMyHabit.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var habitDetails = await _service.GetHabitByIdAsync(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var habitDetails = await _service.GetHabitByIdAsync(id, userId);
             if (habitDetails == null)
             {
                 return NotFound();
