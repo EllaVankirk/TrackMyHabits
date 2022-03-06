@@ -16,6 +16,7 @@ namespace TrackMyHabit.Models
         public int Id { get; set; }
 
 
+        [Display(Name = "Habit Name")]
         [Required, StringLength(20)]
         public string Name { get; set; }
 

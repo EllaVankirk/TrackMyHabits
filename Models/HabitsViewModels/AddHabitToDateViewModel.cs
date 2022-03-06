@@ -8,7 +8,7 @@ namespace TrackMyHabit.Models.HabitsViewModels
     {
         public int HabitId { get; set; }
 
-        [Display(Name = "Habit")]
+        [Display(Name = "Habit Name")]
         public string HabitName { get; set; }
 
         [Display(Name = "Color")]
